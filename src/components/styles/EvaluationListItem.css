@@ -1,0 +1,27 @@
+:root{
+    --main-color1: #ff000a;
+    --main-color2: #005B9A;
+    --main-color3: #8C8984;
+    --main-color4: #1d72d3;
+}
+
+#evaluationItem{
+    background: var(--main-color4);
+    display: flex;
+    padding: 5px;
+    margin: 0 auto;
+    border-radius: 15px;
+    justify-content: center;
+    gap: 1rem;
+    width: 80%;
+    align-items: center;
+    transition: ease-in-out 0.2s;
+}
+
+#evaluationItem:hover{
+    background: var(--main-color2);
+}
+
+#evaluationItem h1, h2{
+    color: white;
+}

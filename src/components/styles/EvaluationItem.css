@@ -1,0 +1,148 @@
+:root{
+  --main-color1: #ff000a;
+  --main-color2: #005B9A;
+  --main-color3: #8C8984;
+  --main-color4: #1d72d3;
+  --main-color5: #0c0c0c;
+}
+
+textarea, input, select{
+  outline: none;
+  padding: 4px;
+  border-radius: 5px;
+}
+
+/* Estilos para el título principal */
+h1 {
+  font-size: 24px;
+  text-align: center;
+  margin: 10px 0;
+  color: var(--main-color4);
+}
+
+/* Estilos para los subtítulos */
+#evaluation-item h2 {
+  font-size: 18px;
+  text-align: center;
+  margin: 10px 0;
+  color: var(--main-color2);
+}
+
+/* Estilos para los títulos dentro del artículo "data-professor" */
+#data-professor h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+/* Estilos para el contenedor "information" */
+#information {
+  background-color: var(--main-color3);
+  padding: 20px;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+/* Estilos generales de la tabla */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.table th, .table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--main-color3);
+  color: var(--main-color3);
+  box-sizing: border-box;
+}
+
+.table td:before {
+  content: attr(data-label) "\A"; /* "\A" representa un salto de línea */
+  white-space: pre-line; /* Habilita el ajuste automático y el salto de línea */
+  font-weight: bold;
+  margin-right: 10px;
+  color:var(--main-color2);
+}
+
+.table tr{
+  border-bottom: 1px solid var(--main-color1);
+}
+
+/* Estilos para la sección de comentarios */
+#coments {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Estilos para el título "Comentarios" */
+#coments h3 {
+  font-size: 20px;
+  color: var(--main-color2); /* Utilizando la variable main-color1 */
+}
+
+/* Estilos para el área de texto de comentarios */
+#coments textarea {
+  width: 70%;
+  border: 1px solid var(--main-color2); /* Utilizando la variable main-color2 */
+}
+
+/* Estilos para el botón "Enviar" */
+#coments button {
+  background-color: var(--main-color2); /* Utilizando la variable main-color1 */
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 20%;
+  height: 3rem;
+}
+
+/* Estilos para el botón al pasar el mouse sobre él */
+#coments button:hover {
+  background-color: var(--main-color4); /* Cambia el color al pasar el mouse */
+}
+
+@media (max-width: 1600px) {
+tr {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+}
+
+@media (max-width: 600px) {
+  #coments textarea {
+    width: 80%;
+  }
+
+  #coments button {
+    width: 50%;
+  }
+
+  .table {
+      border: 0;
+  }
+
+  .table thead {
+      display: none;
+  }
+
+  .table tr {
+      margin-bottom: 10px;
+      display: block;
+  }
+
+  .table td {
+      border: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+  }
+}
+

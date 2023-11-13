@@ -1,0 +1,54 @@
+:root{
+    --main-color1: #ff000a;
+    --main-color2: #005B9A;
+    --main-color3: #8C8984;
+    --main-color4: #1d72d3;
+    --main-color5: #0c0c0c;
+  }
+
+  #new-evaluation{
+    background-color: var(--main-color2); /* Utilizando la variable main-color1 */
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 20%;
+    height: 3rem;
+  }
+
+  #new-evaluation:hover {
+    background-color: var(--main-color4); /* Cambia el color al pasar el mouse */
+  }
+
+  #send {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  /* Estilos para el botón "Enviar" */
+  #send button {
+    background-color: var(--main-color1); /* Utilizando la variable main-color1 */
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 20%;
+    height: 3rem;
+    transition: ease-in-out 0.3s;
+  }
+
+  #send button:hover {
+    transform: scale(1.1);
+  }
+  @media (max-width: 600px) {
+    #new-evaluation{
+        width: 40%;
+    }
+  }

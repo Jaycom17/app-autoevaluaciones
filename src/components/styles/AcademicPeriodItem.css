@@ -1,0 +1,28 @@
+:root{
+    --main-color1: #ff000a;
+    --main-color2: #005B9A;
+    --main-color3: #8C8984;
+    --main-color4: #1d72d3;
+}
+
+#academicPeriod {
+    background: var(--main-color4);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 1rem;
+    border-radius: 15px;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    transition: ease-in-out 0.2s;
+}
+
+#dates{
+    display: flex;
+    flex-direction: row;
+}
+
+#academicPeriod:hover{
+    background: var(--main-color2);
+}
