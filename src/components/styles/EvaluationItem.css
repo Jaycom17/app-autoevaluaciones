@@ -6,6 +6,11 @@
   --main-color5: #0c0c0c;
 }
 
+#evaluation-item{
+  display: flex;
+  flex-direction: column;
+}
+
 textarea, input, select{
   outline: none;
   padding: 4px;
@@ -47,6 +52,12 @@ h1 {
   width: 100%;
   border-collapse: collapse;
   margin: 1em 0;
+}
+
+#row-table{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .table th, .table td {
@@ -112,6 +123,9 @@ h1 {
 tr {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+#row-table{
+  align-items: normal;
 }
 }
 
