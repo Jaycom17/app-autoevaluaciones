@@ -16,7 +16,7 @@ function CreateAcademicPeriodForm() {
                     <div class="modal__circle">
 
                     </div>
-                    <img src="https://www.unicauca.edu.co/regionalizacion/sites/default/files/logo-unicauca.png" class="modal__product" id="img_uni" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Logo_de_la_Universidad_del_Cauca.svg" class="modal__product" id="img_uni" />
                 </div>
                 <div class="modal__content">
                     <h2>Crear Periodo Academico</h2>
