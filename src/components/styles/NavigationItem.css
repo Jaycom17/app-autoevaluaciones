@@ -1,71 +1,24 @@
 /* NavigationItem.css */
 
 #navbar {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background-color: #5161ce;
-	padding: 10px;
-	width: 100%;
-  }
-  
-  #navbar a {
-	color: white;
-	text-decoration: none;
-	padding: 10px;
-	width: 100%;
-  }
-  
-  #navbar a:hover {
-	background-color: #37459e;
-  }
-  
-  .icono-hamburguesa {
-	font-size: 24px;
-	color: white;
-	cursor: pointer;
-	display: none; /* Ocultar el ícono de hamburguesa por defecto */
-  }
-  
-  .menu-desplegable {
-	display: none;
-	flex-direction: column;
-	background-color: #5161ce;
-	width: 100%;
-  }
-  
-  .menu-desplegable a {
-	padding: 10px;
-	color: white; /* Agregado para asegurarse de que los enlaces sean visibles en el menú desplegable */
-  }
-  .menu-desplegable.visible {
-	display: flex;
-  }
-  
-  /* Mostrar el menú desplegable en pantallas pequeñas */
-  @media (max-width: 768px) {
-	#navbar {
-	  flex-direction: column; /* Cambiar a columna cuando el menú está oculto */
-	  align-items: flex-start; /* Ajuste para alinear los elementos a la izquierda */
-	}
-  
-	#navbar a {
-	  display: none;
-	}
-  
-	.menu-desplegable.visible {
-	  display: flex;
-	}
-  
-	.icono-hamburguesa {
-	  display: block; /* Mostrar el ícono de hamburguesa en pantallas pequeñas */
-	}
-  
-	.menu-desplegable {
-	  display: flex;
-	  flex-direction: column;
-	  position: absolute; /* Posición absoluta para superponer el menú en la barra de navegación */
-	  top: 60px; /* Ajusta según el espacio que quieras entre el menú y la barra de navegación */
-	}
-  }
-  
+  background-color: #5161ce;
+  color: white;
+}
+
+#logo{
+	height: 3rem;
+}
+
+#navbarNavDropdown	{
+	justify-content: end;
+}
+
+#basic-nav-dropdown, #home{
+  color: white;
+  font-size: 1.2rem;
+  transition: ease-in-out 0.3s;
+}
+
+#basic-nav-dropdown:hover, #home:hover{
+  color: rgb(76, 35, 35);
+}

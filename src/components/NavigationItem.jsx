@@ -1,70 +1,42 @@
 // Importaciones
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './styles/NavigationItem.css';
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faCalendarPlus, faList, faPencilAlt, faListAlt, faCheck, faBars } from '@fortawesome/free-solid-svg-icons';
+
+
 
 const NavigationItem = () => {
-  const [menuVisible, setMenuVisible] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
+  return(
+<Navbar expand="lg" id='navbar'>
+      <Container>
+        <img id='logo' src="https://www.unicauca.edu.co/versionP/sites/default/files/images/Fiet_New_Generation.png" alt="Unicauca-Logo"/>
+        <Navbar.Toggle aria-controls="navbarNavDropdown" />
+        <Navbar.Collapse id="navbarNavDropdown">
+          <Nav className="mr-auto">
+            <Nav.Link as={Link} to={"/"} id = "home">
+              Home
+            </Nav.Link>
+            <NavDropdown title="Gestion Labor" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to={"/labor/create"}>Crear Labor</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={"/labor"}>Listar Labores</NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Gestion Autoevaluacion" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to={"/self-evaluations/make"}>Realizar Autoevaluación</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={"/self-evaluations/create"}>Crear Autoevaluación</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={"/self-evaluations"}>Listar Autoevaluaciones</NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Gestion Periodo" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to={"/academic-periods/create"}>Crear Periodo</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to={"/academic-periods"}>Listar Periodos</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  )
 
-  return (
-    <div id="navbar">
-      <div className="icono-hamburguesa" onClick={toggleMenu}>
-        <FontAwesomeIcon icon={faBars} />
-      </div>
-
-      <a href="#" id="pagina-principal">
-        <FontAwesomeIcon icon={faHome} /> Página Principal
-      </a>
-      <a href="#">
-        <FontAwesomeIcon icon={faCalendarPlus} /> Crear Periodo Académico
-      </a>
-      <a href="#">
-        <FontAwesomeIcon icon={faList} /> Lista De Períodos Académicos
-      </a>
-      <a href="#">
-        <FontAwesomeIcon icon={faPencilAlt} /> Crear Labor
-      </a>
-      <a href="#">
-        <FontAwesomeIcon icon={faListAlt} /> Lista de Labores
-      </a>
-      <a href="#">
-        <FontAwesomeIcon icon={faCheck} /> Autoevaluación
-      </a>
-      <a href="#">
-        <FontAwesomeIcon icon={faListAlt} /> Lista De Autoevaluaciones
-      </a>
-
-      {/* Menú desplegable */}
-      <div className={`menu-desplegable ${menuVisible ? 'visible' : ''}`}>
-        <a href="#" id="pagina-principal-movil">
-          <FontAwesomeIcon icon={faHome} /> Página Principal
-        </a>
-        <a href="#">
-          <FontAwesomeIcon icon={faCalendarPlus} /> Crear Periodo Académico
-        </a>
-        <a href="#">
-          <FontAwesomeIcon icon={faList} /> Lista De Períodos Académicos
-        </a>
-        <a href="#">
-          <FontAwesomeIcon icon={faPencilAlt} /> Crear Labor
-        </a>
-        <a href="#">
-          <FontAwesomeIcon icon={faListAlt} /> Lista de Labores
-        </a>
-        <a href="#">
-          <FontAwesomeIcon icon={faCheck} /> Autoevaluación
-        </a>
-        <a href="#">
-          <FontAwesomeIcon icon={faListAlt} /> Lista De Autoevaluaciones
-        </a>
-      </div>
-    </div>
-  );
 };
 
 export default NavigationItem;

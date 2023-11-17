@@ -33,7 +33,7 @@ function App() {
         <Route path="/labor" element= {<> <NavigationItem/> <LaborList/> </>}/>
         <Route path="/self-evaluations" element= {<> <NavigationItem/> <SelfEvaluationList/> </>}/>
         <Route path="/self-evaluations/create" element= {<> <NavigationItem/> <SelfEvaluationForm professor={{name: "juan", id: "10029230", labor: {period: "2023-2"}}}/> </>}/>
-        <Route path="/self-evaluations/:id" element= {<> <NavigationItem/> <SelfEvaluationItem/> </>}/>
+        <Route path="/self-evaluations/make" element= {<> <NavigationItem/> <SelfEvaluationItem/> </>}/>
       </Routes>
     </BrowserRouter>
   )

@@ -51,7 +51,6 @@ h5 {
 }
 
 .button--close {
-  position: absolute;
   top: 10px;
   left: 10px;
   display: -ms-flexbox;
@@ -65,7 +64,6 @@ h5 {
   color: #ffffff;
   border-radius: 50%;
   transition: all 0.25s;
-  z-index: 10;
 }
 .button--close svg {
   width: 20px;
@@ -83,7 +81,6 @@ h5 {
 }
 
 .button--info {
-  position: absolute;
   top: 0;
   right: 0;
 }
@@ -113,8 +110,7 @@ input:focus {
   margin-bottom: 25px;
 }
 .form-list__row label {
-  position: relative;
-  display: block;
+  
   text-transform: uppercase;
   font-weight: 600;
   font-size: 11px;
@@ -170,7 +166,6 @@ input:focus {
 }
 #input--cc:before {
   content: "";
-  position: absolute;
   left: 0;
   top: 50%;
   width: 36px;
@@ -207,7 +202,6 @@ input:focus {
   box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.1);
 }
 .modal__featured {
-  position: relative;
   -ms-flex: 1;
   flex: 1;
   min-width: 230px;
@@ -217,7 +211,6 @@ input:focus {
   border-bottom-left-radius: 5px;
 }
 .modal__circle {
-  position: absolute;
   top: 0;
   left: 0;
   height: 200%;
@@ -228,7 +221,6 @@ input:focus {
   transform: translateX(-50%) translateY(-25%);
 }
 .modal__product {
-  position: absolute;
   top: 0;
   left: 50%;
   max-width: 85%;
@@ -261,6 +253,5 @@ input:focus {
 }
 
 .modal__featured img{
-  position: center;
   margin-top: 37%;
 }
