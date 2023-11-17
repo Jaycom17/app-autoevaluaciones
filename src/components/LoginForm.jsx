@@ -2,6 +2,7 @@ import "./styles/LoginForm.css";
 
 function LoginForm() {
   return (
+    <>
     <body className="bodys">
       <div className="session">
         <div className="left">
@@ -82,6 +83,7 @@ function LoginForm() {
         </form>
       </div>
     </body>
+    </>
   );
 }
 

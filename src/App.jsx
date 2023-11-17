@@ -14,12 +14,6 @@ import UpdateLaborForm from './components/UpdateLaborForm.jsx'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 function App() {
-  /*return (
-    <>
-      <SelfEvaluationForm professor={{name: "juan", id: "10029230", labor: {period: "2023-2"}}}/>
-
-    </>
-  )*/
   return(
     <BrowserRouter basename="/autoevaluaciones" id = "App">
       <Routes>
@@ -32,8 +26,8 @@ function App() {
         <Route path="/labor/update/:id" element= {<> <NavigationItem/> <UpdateLaborForm/> </>}/>
         <Route path="/labor" element= {<> <NavigationItem/> <LaborList/> </>}/>
         <Route path="/self-evaluations" element= {<> <NavigationItem/> <SelfEvaluationList/> </>}/>
-        <Route path="/self-evaluations/create" element= {<> <NavigationItem/> <SelfEvaluationForm professor={{name: "juan", id: "10029230", labor: {period: "2023-2"}}}/> </>}/>
-        <Route path="/self-evaluations/:id" element= {<> <NavigationItem/> <SelfEvaluationItem/> </>}/>
+        <Route path="/self-evaluations/create" element= {<> <NavigationItem/> <SelfEvaluationForm /> </>}/>
+        <Route path="/self-evaluations/make" element= {<> <NavigationItem/> <SelfEvaluationItem/> </>}/>
       </Routes>
     </BrowserRouter>
   )

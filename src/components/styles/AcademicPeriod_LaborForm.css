@@ -1,0 +1,130 @@
+/*This CSS stylize the create and update academic period and labor forms*/
+
+#form_container{
+    display: flex;
+    background-color: #939393;
+    min-height: 750px;
+    width: 60rem;
+    height: 30rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    margin: 50px auto;
+    border-radius: 25px;
+    align-items: center;
+}
+
+#form_create_update{
+    padding: 30px 80px;
+    margin: auto;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    outline: none;
+    background-color: #939393;
+}
+
+#form_create_update h1{
+    font-size: 45px;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+#form_create_update label{
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+#select_text_input{
+    font-size: 20px;
+    border: 0;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    outline: none;
+    width: 315px;
+}
+
+#create_update_button{
+    background-color: #005B9A;
+    color: #f0f0f0;
+    font-size: 18px;
+    padding: 15px;
+    border: 0;
+    border-radius: 15px;
+    transition: all ease-in 0.2s;
+    margin-top: 20px;
+    width: 315px;
+}
+
+#create_update_button:hover{
+    transform: scale(1.1);
+    background-color: #0065ad;
+}
+
+#img_uni{
+    width: 53%;
+}
+
+@media (max-width: 675px){
+    #form_container{
+        width: 90%;
+        padding: 0;
+    }
+
+    #form_create_update{
+        width: 100%;
+        padding: 20px;
+        align-items: center;
+    }
+
+    #form_create_update h1{
+        text-align: center;
+    }
+
+    #img_uni{
+        display: none;
+    }
+
+    #select_text_input{
+        width: 90%;
+    }
+    #create_update_button{
+        width: 90%;
+    }
+}
+
+@media (max-width: 1100px){
+    #form_container{
+        width: 90%;
+        padding: 0;
+    }
+
+    #form_create_update{
+        width: 100%;
+        padding: 20px;
+    }
+
+    #form_create_update h1{
+        text-align: center;
+    }
+}
+
+@media (max-width: 710px){
+    #form_container{
+        width: 90%;
+        padding: 0;
+    }
+
+    #form_create_update{
+        width: 100%;
+        padding: 20px;
+    }
+
+    #form_create_update h1{
+        text-align: center;
+    }
+    
+    #img_uni{
+        width: 45%;
+    }
+}

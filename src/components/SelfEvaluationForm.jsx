@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import "./styles/EvaluationItem.css";
 import "./styles/EvaluationForm.css";
-import PropTypes from "prop-types";
 
-function SelfEvaluationForm({ professor }) {
+function SelfEvaluationForm() {
   const [labors, setLabors] = useState([]);
   const [evaluation] = useState({
     nombreLabor: "",
@@ -34,7 +33,7 @@ function SelfEvaluationForm({ professor }) {
       <h2>Evaluación de actividades de labor docente</h2>
       <div id="information">
         <article id="data-professor">
-          <h3> Perido: {professor.labor.period}</h3>
+          <h3> Perido: 2020-1</h3>
         </article>
         <article id="data-general"></article>
       </div>
@@ -76,9 +75,5 @@ function SelfEvaluationForm({ professor }) {
     </div>
   );
 }
-
-SelfEvaluationForm.propTypes = {
-  professor: PropTypes.object.isRequired,
-};
 
 export default SelfEvaluationForm;

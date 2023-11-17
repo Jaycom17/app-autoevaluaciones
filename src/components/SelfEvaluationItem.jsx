@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./styles/EvaluationItem.css";
 
-function SelfEvaluationItem({ professor }) {
+function SelfEvaluationItem() {
   const [labors, setLabors] = useState([]);
 
   useEffect(() => {
@@ -65,9 +65,9 @@ function SelfEvaluationItem({ professor }) {
       </h2>
       <div id="information">
         <article id="data-professor">
-          <h3> Perido: {professor.labor.period}</h3>
-          <h3> Nombre del docente: {professor.name}</h3>
-          <h3> Identificacion: {professor.id}</h3>
+          <h3> Perido: 2020-1</h3>
+          <h3> Nombre del docente: juan</h3>
+          <h3> Identificacion: 1010020202</h3>
         </article>
         <article id="data-general">
         </article>
