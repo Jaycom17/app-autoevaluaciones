@@ -3,11 +3,10 @@
 #form_container{
     display: flex;
     background-color: #939393;
-    min-height: 750px;
-    width: 60rem;
-    height: 30rem;
+    min-height: 450px;
+    width: 750px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-    margin: 50px auto;
+    margin: 30px auto;
     border-radius: 25px;
     align-items: center;
 }
@@ -23,21 +22,21 @@
 }
 
 #form_create_update h1{
-    font-size: 45px;
+    font-size: 30px;
     color: black;
     font-weight: 600;
     margin-bottom: 25px;
 }
 
 #form_create_update label{
-    font-size: 25px;
+    font-size: 15px;
     margin-bottom: 10px;
 }
 
 #select_text_input{
-    font-size: 20px;
+    font-size: 15px;
     border: 0;
-    padding: 15px;
+    padding: 10px;
     border-radius: 15px;
     margin-bottom: 15px;
     outline: none;
@@ -62,7 +61,7 @@
 }
 
 #img_uni{
-    width: 53%;
+    width: 42%;
 }
 
 @media (max-width: 675px){
@@ -93,26 +92,34 @@
     }
 }
 
-@media (max-width: 1100px){
+@media (max-width: 800px){
     #form_container{
         width: 90%;
-        padding: 0;
+        padding: 0px 20px;
     }
 
     #form_create_update{
         width: 100%;
-        padding: 20px;
+        padding: 30px;
     }
 
     #form_create_update h1{
         text-align: center;
+    }
+
+    #select_text_input{
+        width: 95%;
+    }
+
+    #img_uni{
+        width: 40%;
     }
 }
 
 @media (max-width: 710px){
     #form_container{
         width: 90%;
-        padding: 0;
+        padding: 0 20px;
     }
 
     #form_create_update{
