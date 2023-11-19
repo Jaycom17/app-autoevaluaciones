@@ -1,26 +1,20 @@
 @media screen {
-    #List{
+    #list{
         display: grid;
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(1,1fr);
     } 
 }
-@media screen and (min-width: 1200px) {
-    #List{
+@media screen and (min-width: 830px) {
+    #list{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+@media screen and (min-width: 1246px) {
+    #list{
         display: grid;
         grid-template-columns: repeat(3,1fr);
     }
 }
 
-#return {
-    background: var(--main-color4);
-    padding: 10px;
-    margin: 1rem;
-    border-radius: 15px;
-    justify-content: center;
-    gap: 1rem;
-    align-items: center;
-    transition: ease-in-out 0.2s;
-}
-#return:hover{
-    background: var(--main-color2);
-}
+

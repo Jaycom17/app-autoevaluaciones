@@ -19,8 +19,7 @@ function AcademicPeriodList() {
 
   return (
     <>
-    <a id='return'>Volver</a>
-    <div id="List">
+    <div id="list">
       {academicPeriodList.map((academicPeriod, index) =>
       <AcademicPeriodListItem key={index} academicList={academicPeriod} />) }
     </div>

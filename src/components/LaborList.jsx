@@ -26,8 +26,7 @@ function LaborList() {
 
   return (
     <>
-    <a id='return' onClick={redirigirAMismaPagina}>Volver</a>
-    <div id="List">
+    <div id="list">
       {laborList.map((laborItem, index) =>
       <LaborListItem key={index} labor={laborItem} />) }
     </div>

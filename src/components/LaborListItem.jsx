@@ -7,15 +7,22 @@ function LaborListItem({ labor }){
     }
 
     return(
-        <a onClick={goToEvaluate} id='academicPeriod'>
-            <h1>{labor.nombre}</h1>
+        <section id='academicPeriod'>
+            <h1 id="tittle">{labor.nombre}</h1>
             <section id='dates'>
                 <h2>{labor.horasAsignadas}</h2>
                 <h2>   -   </h2>
                 <h2>{labor.tipoLabor}</h2>
             </section>
-            
-        </a>
+            <section id='buttons'>
+                <button type="submit" id="update_delete_button">
+                    Actualizar
+                </button>
+                <button type="submit" id="update_delete_button">
+                    Eliminar
+                </button>
+            </section>
+        </section>
     );
 }
 

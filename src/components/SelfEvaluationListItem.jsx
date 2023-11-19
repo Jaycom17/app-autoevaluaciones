@@ -7,10 +7,25 @@ function SelfEvaluationListItem({ selfEvaluation }){
     }
 
     return(
-        <a onClick={goToEvaluate} id='evaluationItem'>
-            <h1>{selfEvaluation.periodo}</h1>
-            <h2>{selfEvaluation.estado}</h2>
-        </a>
+        <>
+        <section id='evaluationItem'>
+            <section id="dates">
+            <h1 id="tittle">{selfEvaluation.periodo}</h1>
+            <h2 id="tittle">{selfEvaluation.estado}</h2>
+            </section>
+            <section id='buttons'>
+                <button type="submit" id="update_delete_button">
+                    Actualizar
+                </button>
+                <button type="submit" id="update_delete_button">
+                    Eliminar
+                </button>
+            </section>
+        </section>
+        
+        </>
+        
+        
     );
 }
 
