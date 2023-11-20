@@ -1,34 +1,40 @@
 import { useState, useEffect } from "react";
 import React from 'react';
 
+import { getLabors } from "../api/labor.js";
+import { deleteLabor } from '../api/labor.js';
+
 import "./styles/List.css"
 
 import LaborListItem from "./LaborListItem.jsx";
 
 function LaborList() {
   const [laborList, setLaborList] = useState([]);
+
+  const handleDeleteItem  = async (id) => {
+    const response = await deleteLabor(id);
+    if (response) {
+      const newLaborList = laborList.filter((labor) => labor.lab_id !== id);
+      setLaborList(newLaborList);
+      alert("Labor eliminada con éxito");
+    } else {
+        alert("Error al eliminar la labor");
+    }
+};
   
   useEffect(() => {
-    setLaborList([
-      { nombre: "Abrazar un árbol ll A", horasAsignadas: 32, tipoLabor: "Docencia"},
-      { nombre: "Piggy Bank ll B", horasAsignadas: 32, tipoLabor: "Docencia"},
-      { nombre: "Que pansho l A", horasAsignadas: 32, tipoLabor: "Docencia"},
-      { nombre: "Para terminar l B", horasAsignadas: 32, tipoLabor: "Docencia"},
-      { nombre: "Carlos sos un genio ll C", horasAsignadas: 16, tipoLabor: "Docencia"},
-      { nombre: "Millonarios lll C", horasAsignadas: 64, tipoLabor: "Docencia"},
-    ]);
+    getLabors().then((res) => {
+      setLaborList(res);
+    }).catch((err) => {
+      console.log(err);
+    });
   }, []);
-
-
-    const redirigirAMismaPagina = () => {
-      window.location.href = window.location.href; // Redirige a la misma página
-    };
 
   return (
     <>
     <div id="list">
-      {laborList.map((laborItem, index) =>
-      <LaborListItem key={index} labor={laborItem} />) }
+      {laborList.map((laborItem) =>
+      <LaborListItem key={laborItem.lab_id} labor={laborItem} onDelete={handleDeleteItem }/>) }
     </div>
     </>
   );
