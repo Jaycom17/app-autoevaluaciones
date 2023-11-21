@@ -52,6 +52,8 @@ h1{
     width: 150px;
     margin-inline: 1rem;
     margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
 }
 
 #update_delete_button:hover{
