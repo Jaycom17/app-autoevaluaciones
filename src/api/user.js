@@ -16,3 +16,8 @@ export const logout = async () => {
   const { data } = await axios.post(`${API_URL}/user/logout`);
   return data;
 };
+
+export const getProfessors = async () => {
+  const { data } = await axios.get(`${API_URL}/user/professors`);
+  return data;
+}

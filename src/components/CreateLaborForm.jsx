@@ -26,7 +26,9 @@ function CreateLaborForm() {
       })}>
         <h1>Crear labor</h1>
         <label>Tipo de labor</label>
+
         {errors.TL_DESCRIPCION && <p style={{ color: 'red', fontSize: 'smaller' }}>debe seleccionar un tipo</p>}
+
         <select name="TipoL" id="select_text_input" {...register("TL_DESCRIPCION", { required: true })}>
           <option disabled hidden selected>
             Tipo de labor
@@ -43,10 +45,14 @@ function CreateLaborForm() {
           <option>Otros Servicios</option>
         </select>
         <label>Nombre de labor</label>
+
         {errors.LAB_NOMBRE && <p style={{ color: 'red', fontSize: 'smaller' }}>debe ingresar el nombre</p>}
+
         <input type="text" name="" id="select_text_input"  {...register("LAB_NOMBRE", { required: true })} />
         <label>Horas asignadas</label>
+
         {errors.LAB_HORAS && <p style={{ color: 'red', fontSize: 'smaller' }}>debe ingresar las horas</p>}
+        
         <input type="number" name="" id="select_text_input" {...register("LAB_HORAS", { required: true })} />
 
         <button type="submit" id="create_update_button">

@@ -1,27 +1,51 @@
 import { useEffect, useState } from "react";
+
+import { getLabors } from "../api/labor.js";
+import { getProfessors } from "../api/user.js";
+import { getPeriods } from "../api/period.js";
+
 import "./styles/EvaluationItem.css";
 import "./styles/EvaluationForm.css";
 
 function SelfEvaluationForm() {
   const [labors, setLabors] = useState([]);
-  const [evaluation] = useState({
-    nombreLabor: "",
-    tipoLabor: "",
-    horas: "",
-    descripcion: "",
-    acto: "X",
-    fechaInicio: "Sep-10-2023",
-    fechaFin: "Feb-10-2024",
-    estado: "En ejecución",
-  });
+  const [professors, setProfessors] = useState([]);
+  const [periods, setPeriods] = useState([]);
+
+  const [evaluations, setEvaluations] = useState([]);
 
   const newEvaluation = () => {
-    setLabors([...labors, evaluation]);
+    if(evaluations.length < labors.length){ setEvaluations([...evaluations, { id: evaluations.length + 1 }])};
+  };
+
+  const removeEvaluation = () => {
+    if(evaluations.length > 0){ setEvaluations(evaluations.slice(0, -1))};
   };
 
   useEffect(() => {
-    setLabors([evaluation]);
-  }, [evaluation]);
+
+    getLabors().then((res) => {
+      setLabors(res);
+    }).catch((err) => {
+      setLabors([]);
+      console.log(err);
+    });
+
+    getProfessors().then((res) => {
+      setProfessors(res);
+    }).catch((err) => {
+      setProfessors([]);
+      console.log(err);
+    });
+
+    getPeriods().then((res) => {
+      console.log(res);
+      setPeriods(res);
+    }).catch((err) => {
+      setPeriods([]);
+      console.log(err);
+    });
+  }, []);
 
   return (
     <div id="evaluation-item">
@@ -31,44 +55,70 @@ function SelfEvaluationForm() {
         Del Cauca
       </h2>
       <h2>Evaluación de actividades de labor docente</h2>
+
       <div id="information">
         <article id="data-professor">
-          <h3> Perido: 2020-1</h3>
+        <select name="professor" id="select-important">
+          <option disabled hidden selected>
+            Seleccione un docente
+          </option>
+          {professors.map((professor) => (
+            <option key={professor.usr_identificacion} value={professor.usr_identificacion}>
+              {professor.usu_nombre} {professor.usu_apellido} - {professor.usr_identificacion}
+            </option>
+          ))}
+        </select>
+        <select name="professor" id="select-important">
+          <option disabled hidden selected>
+            Seleccione un perido
+          </option>
+          {periods.map((period) => (
+            <option key={period.per_id} value={period.per_id}>
+              {period.per_nombre}
+            </option>
+          ))}
+        </select>
         </article>
-        <article id="data-general"></article>
       </div>
-      <table className="table">
-        <tbody>
-          {labors.map((labor, i) => {
-            return (
-              <div id="row-table" key={i}>
-                <h3>Evaluacion {i + 1}:</h3>
-                <tr>
-                  <td data-label="Nombre de labor">
-                    <select name="options" id="options"></select>
-                  </td>
-                  <td data-label="Tipo de labor">
-                    <input type="text" disabled />
-                  </td>
-                  <td data-label="Horas">
-                    <input type="number" />
-                  </td>
-                  <td data-label="Descripción">
-                    <textarea rows="4" cols="30"></textarea>
-                  </td>
-                  <td data-label="Acto (si aplica)">{labor.acto}</td>
-                  <td data-label="Fecha inicio">{labor.fechaInicio}</td>
-                  <td data-label="Fecha fin">{labor.fechaFin}</td>
-                  <td data-label="Estado">{labor.estado}</td>
-                </tr>
-              </div>
-            );
-          })}
-        </tbody>
-      </table>
+      
+      <form action="" id="form">
+
+      {evaluations.map((evaluation) => (
+        <div key={evaluation.id} id="evaluation">
+          <div id="div-form">
+        <label id="labor-label">Labor: </label>
+        <select name="labor" id="labor-select">
+          <option disabled hidden selected>
+            Seleccione una labor
+          </option>
+          {labors.map((labor) => (
+            <option key={labor.lab_id} value={labor.lab_id}>
+              {labor.lab_nombre}
+            </option>
+          ))}
+        </select>
+
+        <label id="labor-label">Estado</label>
+        <select name="status" id="labor-select">
+          <option disabled hidden selected>
+            Seleccione un estado
+          </option>
+          <option value="0">En ejecución</option>
+          <option value="1">Terminado</option>
+        </select>
+        </div>
+        <div id="divisor"></div>
+        </div>
+      ))}
+      </form>
+      <div id="control-buttons">
       <button onClick={newEvaluation} id="new-evaluation">
         Agregar Evaluación
       </button>
+      <button onClick={removeEvaluation} id="delete-evaluation">
+        quitar Evaluación
+      </button>
+      </div>
       <section id="send">
         <button>Crear</button>
       </section>

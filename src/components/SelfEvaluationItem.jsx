@@ -69,8 +69,6 @@ function SelfEvaluationItem() {
           <h3> Nombre del docente: juan</h3>
           <h3> Identificacion: 1010020202</h3>
         </article>
-        <article id="data-general">
-        </article>
       </div>
       <table class="table">
         <tbody>

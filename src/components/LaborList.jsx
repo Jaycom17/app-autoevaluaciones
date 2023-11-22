@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import React from 'react';
 
-import { getLabors } from "../api/labor.js";
-import { deleteLabor } from '../api/labor.js';
+import { getLabors, deleteLabor } from "../api/labor.js";
 
 import "./styles/List.css"
 

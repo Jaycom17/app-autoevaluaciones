@@ -6,20 +6,38 @@
     --main-color5: #0c0c0c;
   }
 
-  #new-evaluation{
-    background-color: var(--main-color2); /* Utilizando la variable main-color1 */
+  #delete-evaluation{
+    background-color: var(--main-color1); /* Utilizando la variable main-color1 */
     color: #fff;
-    padding: 8px 16px;
+    padding: 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
     width: 20%;
-    height: 3rem;
   }
 
+  #new-evaluation{
+    background-color: var(--main-color2); /* Utilizando la variable main-color1 */
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 20%;
+  }
+  
   #new-evaluation:hover {
     background-color: var(--main-color4); /* Cambia el color al pasar el mouse */
+  }
+
+  #delete-evaluation:hover {
+    background-color: #ff232a; /* Cambia el color al pasar el mouse */
+  }
+
+  #select-important{
+    margin-left: 1rem;
   }
 
   #send {
@@ -29,10 +47,19 @@
     gap: 1rem;
     align-items: center;
   }
+
+  #control-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
   
   /* Estilos para el botón "Enviar" */
   #send button {
-    background-color: var(--main-color1); /* Utilizando la variable main-color1 */
+    background-color: var(--main-color3); /* Utilizando la variable main-color1 */
     color: #fff;
     padding: 8px 16px;
     border: none;
@@ -47,8 +74,54 @@
   #send button:hover {
     transform: scale(1.1);
   }
+
+  #div-form{
+    display: flex;
+    flex-direction: row; /* Cambiado a fila para que los elementos internos se alineen horizontalmente */
+    gap: 1rem;
+    align-items: center; /* Centra los elementos verticalmente */
+    margin: 0 auto;
+  }
+
+  #labor-select{
+    width: 50%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  }
+  
+  /* Estilos para cada evaluación en el formulario */
+  #evaluation {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Estilos para las etiquetas (labels) del formulario */
+
+  #divisor{
+    width: 100%;
+    height: 1px;
+    background-color: #ff000a;
+  }
+  
+
   @media (max-width: 600px) {
-    #new-evaluation{
+    #new-evaluation, #delete-evaluation {
+      padding: 5px;
         width: 40%;
+    }
+    #control-buttons{
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1rem;
+      gap: 1rem;
+    }
+    #div-form{
+    flex-direction: column;
+    }
+    #labor-select{
+      width: 100%;
     }
   }

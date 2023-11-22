@@ -11,3 +11,11 @@ export const createPeriod = async (period) => {
     return true;
   }
 };
+
+export const getPeriods = async () => {
+  const { data } = await axios.get(`${API_URL}/period`).catch(() => {
+    return [];
+  });
+
+  return data;
+};
