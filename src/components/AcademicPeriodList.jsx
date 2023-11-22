@@ -1,27 +1,40 @@
 import { useState, useEffect } from "react";
 import React from 'react';
 
+import { getPeriods, deletePeriod } from "../api/period.js";
+
 import "./styles/AcademicPeriodList.css"
 
 import AcademicPeriodListItem from "./AcademicPeriodListItem.jsx";
 
 function AcademicPeriodList() {
+
   const [academicPeriodList, setAcademicPeriodList] = useState([]);
   
+  const handleDeleteItem  = async (id) => {
+    const response = await deletePeriod(id);
+    if (response) {
+      const newAcademicPeriodList = academicPeriodList.filter((academicPeriod) => academicPeriod.id !== id);
+      setAcademicPeriodList(newAcademicPeriodList);
+      alert("Periodo eliminado con éxito");
+    } else {
+      alert("Error al eliminar el periodo");
+    }
+  };
+
   useEffect(() => {
-    setAcademicPeriodList([
-      { periodo: "2022-2", dateStart: "01/07/22", dateEnd: "01/11/22"},
-      { periodo: "2023-1", dateStart: "01/01/23", dateEnd: "01/06/22" },
-      { periodo: "2023-2", dateStart: "01/07/23", dateEnd: "01/11/23" },
-      { periodo: "2023-2", dateStart: "01/07/23", dateEnd: "01/11/23" }
-    ]);
+    getPeriods().then((res) => {
+      setAcademicPeriodList(res);
+    }).catch((err) => {
+      console.log(err);
+    })
   }, []);
 
   return (
     <>
     <div id="list">
-      {academicPeriodList.map((academicPeriod, index) =>
-      <AcademicPeriodListItem key={index} academicList={academicPeriod} />) }
+      {academicPeriodList.map((academicPeriod) =>
+      <AcademicPeriodListItem key={academicPeriod.per_id} academicList={academicPeriod} onDelete={handleDeleteItem} />) }
     </div>
     </>
   );

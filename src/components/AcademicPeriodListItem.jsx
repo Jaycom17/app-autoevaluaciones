@@ -1,24 +1,25 @@
-import './styles/AcademicPeriodItem.css'
+import { Link } from 'react-router-dom';
+import './styles/Item.css'
 
-function AcademicPeriodListItem({ academicList }) {
+function AcademicPeriodListItem({ academicList, onDelete }) {
 
-    const goToEvaluate = () => {
-
+    const handleDelete = async() => {
+        await onDelete(academicList.per_id);
     }
 
     return (
         <section id='academicPeriod'>
-            <h1 id="tittle">{academicList.periodo}</h1>
+            <h2 id= "tittle">{academicList.per_nombre}</h2>
             <section id='dates'>
-                <h2>{academicList.dateStart}</h2>
-                <h2>   -   </h2>
-                <h2>{academicList.dateEnd}</h2>
+                <h1 id="tittle">{academicList.per_fechainicio}</h1>
+                <h1 id="tittle">   -   </h1>
+                <h1 id="tittle">{academicList.per_fechafin}</h1>
             </section>
             <section id='buttons'>
-                <button type="submit" id="update_delete_button">
+                <Link id="update_delete_button" to={`/academic-periods/update/${academicList.per_id}`}>
                     Actualizar
-                </button>
-                <button type="submit" id="update_delete_button">
+                </Link>
+                <button id="update_delete_button" onClick={handleDelete}>
                     Eliminar
                 </button>
             </section>
