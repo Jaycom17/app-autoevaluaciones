@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm  } from "react-hook-form";
 
 import { getLaborById, updateLabor } from "../api/labor.js";
 
@@ -8,6 +8,9 @@ import { useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
+
 function UpdateLaborForm() {
 
   const [currentLabor, setCurrentLabor] = useState({});
@@ -15,6 +18,8 @@ function UpdateLaborForm() {
   const[currentLaborType, setCurrentLaborType] = useState([]);
 
   const {id} = useParams();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -36,6 +41,13 @@ function UpdateLaborForm() {
                           {tl_descripcion:"Capacitación"},
                           {tl_descripcion:"Otros Servicios"}]);
       setCurrentLabor(res);
+
+      reset({
+        tl_descripcion:res.tl_descripcion,
+        lab_nombre:res.lab_nombre,
+        lab_horas:res.lab_horas,
+      });
+
     }).catch((err) => {
       console.log(err);
     });
@@ -46,12 +58,14 @@ function UpdateLaborForm() {
     setCurrentLabor({ ...currentLabor, [name]: value });
   };
 
+
   return (
     <div id="form_container">
       <form id="form_create_update" onSubmit={handleSubmit (async (values) => {
         const response = await updateLabor(id, values);
         if (response) {
           alert("Labor actualizada con éxito");
+          navigate("/labor",{replace:true});
           setCurrentLabor(values)
           setCurrentLaborType(values.tl_descripcion)
           reset();
@@ -76,7 +90,7 @@ function UpdateLaborForm() {
         <label>Horas asignadas</label>
         {errors.LAB_HORAS && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes ingresar las horas</p>}
         <input type="number" name="" id="select_text_input" min="0" defaultValue={currentLabor.lab_horas} onChange={handleInputChange} {...register("LAB_HORAS", { required: true })} />
-        <button type="submit" id="create_update_button">
+        <button type="submit" id="create_update_button" >
           Confirmar cambios
         </button>
       </form>
