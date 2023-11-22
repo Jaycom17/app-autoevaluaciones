@@ -2,9 +2,27 @@ import { useForm } from "react-hook-form";
 
 import { createLabor } from "../api/labor.js";
 
+import { useEffect, useState } from "react";
+
 import "./styles/AcademicPeriod_LaborForm.css";
 
 function CreateLaborForm() {
+
+  const[currentLaborType, setCurrentLaborType] = useState([]);
+
+  useEffect(()=> {
+    setCurrentLaborType([{tl_descripcion:"Docencia"},
+                          {tl_descripcion:"Trabajos Docencia"},
+                          {tl_descripcion:"Proyectos Investigación"},
+                          {tl_descripcion:"Trabajos Investigación"},
+                          {tl_descripcion:"Administración"},
+                          {tl_descripcion:"Asesoría"},
+                          {tl_descripcion:"Servicios"},
+                          {tl_descripcion:"Extensión"},
+                          {tl_descripcion:"Capacitación"},
+                          {tl_descripcion:"Otros Servicios"}]);
+  }); 
+
 
   const {
     register,
@@ -31,16 +49,9 @@ function CreateLaborForm() {
           <option disabled hidden selected>
             Tipo de labor
           </option>
-          <option>Docencia</option>
-          <option>Trabajos Docencia</option>
-          <option>Proyectos Investigación</option>
-          <option>Trabajos Investigación</option>
-          <option>Administración</option>
-          <option>Asesoría</option>
-          <option>Servicios</option>
-          <option>Extensión</option>
-          <option>Capacitación</option>
-          <option>Otros Servicios</option>
+          {currentLaborType.map((tipo, i) => (
+            <option key={i}>{tipo.tl_descripcion}</option>
+          ))}
         </select>
         <label>Nombre de labor</label>
         {errors.LAB_NOMBRE && <p style={{ color: 'red', fontSize: 'smaller' }}>Debe ingresar el nombre</p>}
