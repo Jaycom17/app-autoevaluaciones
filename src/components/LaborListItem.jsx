@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './styles/Item.css'
 
 function LaborListItem({ labor, onDelete }){
@@ -15,9 +16,9 @@ function LaborListItem({ labor, onDelete }){
                 <h2>{labor.tl_descripcion}</h2>
             </section>
             <section id='buttons'>
-                <button id="update_delete_button">
+                <Link id="update_delete_button" to={`/labor/update/${labor.lab_id}`}>
                     Actualizar
-                </button>
+                </Link>
                 <button id="update_delete_button" onClick={handleDelete}>
                     Eliminar
                 </button>

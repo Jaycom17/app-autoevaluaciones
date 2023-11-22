@@ -8,6 +8,7 @@ import "./styles/List.css"
 import LaborListItem from "./LaborListItem.jsx";
 
 function LaborList() {
+
   const [laborList, setLaborList] = useState([]);
 
   const handleDeleteItem  = async (id) => {
@@ -19,8 +20,10 @@ function LaborList() {
     } else {
         alert("Error al eliminar la labor");
     }
-};
+  };
   
+  
+
   useEffect(() => {
     getLabors().then((res) => {
       setLaborList(res);
