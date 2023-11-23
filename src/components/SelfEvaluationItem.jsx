@@ -1,53 +1,36 @@
 import { useEffect, useState } from "react";
+
+import { getEvaluationbyProfessor } from "../api/evaluation";
+
+import { useAuth } from "../context/AuthContext";
+
+import { makeEvaluation } from "../api/evaluation.js";
+
+import { useForm  } from "react-hook-form";
+
 import "./styles/EvaluationItem.css";
 
 function SelfEvaluationItem() {
-  const [labors, setLabors] = useState([]);
+  const [evaluations, setEvaluations] = useState([]);
+  const [generalInfo, setGeneralInfo] = useState({});
+
+  const { user } = useAuth();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   useEffect(() => {
-    setLabors([
-      {
-        nombreLabor: "Electiva: Bodega de datos",
-        tipoLabor: "Docencia",
-        horas: "64",
-        descripcion: "Ingenieria de sistemas: Obligatoria 2023",
-        acto: "X",
-        fechaInicio: "Sep-10-2023",
-        fechaFin: "Feb-10-2024",
-        estado: "Terminado"
-      },
-      {
-        nombreLabor: "Otro trabajo",
-        tipoLabor: "Investigación",
-        horas: "48",
-        descripcion: "Trabajo adicional en informática",
-        acto: "X",
-        fechaInicio: "May-15-2023",
-        fechaFin: "Ago-20-2023",
-        estado: "En progreso"
-      },
-      {
-        nombreLabor: "Proyecto de diseño",
-        tipoLabor: "Diseño",
-        horas: "36",
-        descripcion: "Diseño de interiores para una empresa",
-        acto: "X",
-        fechaInicio: "Jul-02-2023",
-        fechaFin: "Nov-30-2023",
-        estado: "Planificado"
-      },
-      {
-        nombreLabor: "Tarea de ejemplo",
-        tipoLabor: "Tarea",
-        horas: "12",
-        descripcion: "Ejemplo de tarea",
-        acto: "X",
-        fechaInicio: "Oct-10-2023",
-        fechaFin: "Oct-20-2023",
-        estado: "Terminado"
-      }
-    ]
-    );
+    getEvaluationbyProfessor(user.usr_identificacion).then((res) => {
+      setEvaluations(res);
+      setGeneralInfo(res[0]);
+    }).catch((err) => {
+      setEvaluations([]);
+      console.log(err);
+    });
   },[]);
 
   return (
@@ -65,35 +48,38 @@ function SelfEvaluationItem() {
       </h2>
       <div id="information">
         <article id="data-professor">
-          <h3> Perido: 2020-1</h3>
-          <h3> Nombre del docente: juan</h3>
-          <h3> Identificacion: 1010020202</h3>
+          <h3> Perido: {generalInfo.per_nombre}</h3>
+          <h3> Nombre del docente: {generalInfo.usu_nombre} {generalInfo.usu_apellido}</h3>
+          <h3> Identificacion: {generalInfo.usr_identificacion}</h3>
         </article>
       </div>
+      <form onSubmit={handleSubmit((values)=>{
+        console.log(values);
+      })}>
       <table class="table">
         <tbody>
-          {labors.map((labor, i)=>{
+          {evaluations.map((evaluation, i)=>{
             return(
               <div key={i}>
               <h3>Evaluacion {i+1}:</h3>
               <tr>
-                <td data-label="Nombre de labor">{labor.nombreLabor}</td>
-                <td data-label="Tipo de labor">{labor.tipoLabor}</td>
-                <td data-label="Horas">{labor.horas}</td>
-                <td data-label="Descripción">{labor.descripcion}</td>
-                <td data-label="Acto (si aplica)">{labor.acto}</td>
-                <td data-label="Fecha inicio">{labor.fechaInicio}</td>
-                <td data-label="Fecha fin">{labor.fechaFin}</td>
-                <td data-label="Estado">{labor.estado}</td>
+                <td data-label="Nombre de labor">{evaluation.lab_nombre}</td>
+                <td data-label="Tipo de labor">{evaluation.tl_descripcion}</td>
+                <td data-label="Horas">{evaluation.lab_horas}</td>
+                <td data-label="Descripción">{evaluation.lab_nombre}</td>
+                <td data-label="Acto (si aplica)">Si</td>
+                <td data-label="Fecha inicio">{evaluation.per_fechainicio}</td>
+                <td data-label="Fecha fin">{evaluation.per_fechafin}</td>
+                <td data-label="Estado">{evaluation.eva_estado === 0 ? "En ejecucion" : "cerrado"}</td>
                 <td data-label="Resultados">
                   {
-                    labor.tipoLabor == "Docencia"? 
-                    <textarea rows="4" cols="30"></textarea>:
+                    evaluation.tl_descripcion.toLowerCase() == "docencia"? 
+                    <textarea rows="4" cols="30" name="eva_resultado" {...register(`eva_resultado${evaluation.eva_id}`, { required: true })}></textarea>:
                     <input type="file" />
                   }
                 </td>
                 <td data-label="Evaluación">
-                  <input type="number " />
+                  <input type="number " name="eva_puntaje" {...register(`eva_puntaje${evaluation.eva_id}`, { required: true })}/>
                 </td>
               </tr>
               </div>
@@ -101,11 +87,15 @@ function SelfEvaluationItem() {
           })}
         </tbody>
       </table>
+
+      {Object.keys(errors).length > 0 && <span style={{ color: 'red', fontSize: 'smaller' }}>Debe llenar todos los campos</span>}
+
       <section id="coments">
         <h3>Comentarios:</h3>
-        <textarea rows="4" cols="30"></textarea>
-        <button>Enviar</button>
+        <textarea rows="4" cols="30" ></textarea>
+        <button type="submit">Enviar</button>
       </section>
+    </form>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm  } from "react-hook-form";
 
 import { getLaborById, updateLabor } from "../api/labor.js";
 
@@ -8,6 +8,9 @@ import { useParams } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
+
 function UpdateLaborForm() {
 
   const [currentLabor, setCurrentLabor] = useState({});
@@ -15,6 +18,8 @@ function UpdateLaborForm() {
   const[currentLaborType, setCurrentLaborType] = useState([]);
 
   const {id} = useParams();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -26,6 +31,11 @@ function UpdateLaborForm() {
   useEffect(() => {
     getLaborById(id).then((res) => {
       setCurrentLabor(res);
+      reset({
+        tl_descripcion:res.tl_descripcion,
+        lab_nombre:res.lab_nombre,
+        lab_horas:res.lab_horas,
+      });
     }).catch((err) => {
       console.log(err);
     });
@@ -46,10 +56,10 @@ function UpdateLaborForm() {
     <div id="form_container">
       <form id="form_create_update" onSubmit={handleSubmit (async (values) => {
         
-console.log(values);
         const response = await updateLabor(id, values);
         if (response) {
           alert("Labor actualizada con éxito");
+          navigate("/labor",{replace:true});
           reset();
         } else {
           alert("Error al actualizar la labor");
@@ -57,26 +67,25 @@ console.log(values);
       })}>
         <h1>Actualizar labor</h1>
         <label>Tipo de labor</label>
-        {errors.TL_DESCRIPCION && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes seleccionar un tipo de labor</p>}
+        {errors.tl_descripcion && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes seleccionar un tipo de labor</p>}
         <select name="TipoL" id="select_text_input" {...register("tl_descipcion", { required: true })}>
           {currentLaborType.map((tipo, i) => (
             tipo === currentLabor.tl_descripcion ? <option key={i} value={tipo.tl_descripcion} selected>{tipo.tl_descripcion}</option> : <option key={i} value={tipo.tl_descripcion}>{tipo.tl_descripcion}</option>
           ))}
         </select>
         <label>Nombre de labor</label>
-        {errors.LAB_NOMBRE && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes ingresar el nombre</p>}
+        {errors.lab_nombre && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes ingresar el nombre</p>}
 
         <input
           type="text"
-          name="LAB_NOMBRE"
+          name="lab_nombre"
           id="select_text_input"
           {...register("lab_nombre", { required: true })}
-          defaultValue={currentLabor.lab_nombre}
         />
         
         <label>Horas asignadas</label>
-        {errors.LAB_HORAS && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes ingresar las horas</p>}
-        <input type="number" name="" id="select_text_input" min="0" defaultValue={currentLabor.lab_horas} {...register("lab_horas", { required: true })} />
+        {errors.lab_horas && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes ingresar las horas</p>}
+        <input type="number" name="lab_horas" id="select_text_input" {...register("lab_horas", { required: true })} />
         <button type="submit" id="create_update_button">
           Confirmar cambios
         </button>

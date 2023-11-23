@@ -23,9 +23,12 @@ export const getLabors = async () => {
 };
 
 export const updateLabor = async (id, labor) => {
+  console.log(id, labor);
   const result = await axios.put(`${API_URL}/labor/${id}`, labor).catch(() =>{
     return false;
   });
+
+  console.log(result);
 
   if(result){
     return true;
