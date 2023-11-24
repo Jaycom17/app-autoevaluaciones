@@ -23,8 +23,8 @@ function UpdateAcademicPeriodForm() {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm();
-
 
   useEffect(() => {
     getPeriodById(id).then((res) => {
@@ -45,9 +45,34 @@ function UpdateAcademicPeriodForm() {
     setCurrentPeriod({ ...currentPeriod, [name]: value });
   };
 
+  
+  const startDate = watch("per_fechainicio");
+
   return (
     <div id="form_container">
       <form id="form_create_update" onSubmit={handleSubmit (async (values) => {
+        if (startDate && new Date(values.per_fechafin) <= new Date(startDate)) {
+          alert("La fecha de fin debe ser posterior a la fecha de inicio");
+          return;
+        }
+        
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(values.per_fechafin);
+
+        // Validación para asegurarse de que la diferencia sea al menos de 4 meses
+        const minDurationInMillis = 4 * 30 * 24 * 60 * 60 * 1000;
+        if (endDateObj - startDateObj < minDurationInMillis) {
+          alert("El periodo académico debe ser de al menos 4 meses");
+          return;
+        }
+
+        // Validación para asegurarse de que la diferencia no sea mayor a 6 meses
+        const maxDurationInMillis = 6 * 30 * 24 * 60 * 60 * 1000;
+        if (endDateObj - startDateObj > maxDurationInMillis) {
+          alert("El periodo académico no puede ser mayor a 6 meses");
+          return;
+        }
+
         const response = await updatePeriod(id, values);
         if (response) {
           alert("Período actualizado con éxito");
