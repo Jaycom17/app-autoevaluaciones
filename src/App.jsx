@@ -22,7 +22,7 @@ import { AuthProvider } from './context/AuthContext.jsx'
 function App() {
   return(
     <AuthProvider>
-      <BrowserRouter basename="/autoevaluaciones" id = "App">
+      <BrowserRouter id = "App">
         <Routes>
           <Route path="/login" element= {<LoginForm/>}/>
           <Route element= {<ProtectedRoute/>}>
