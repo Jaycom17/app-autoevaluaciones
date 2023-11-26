@@ -16,11 +16,9 @@
     gap: 1rem;
     align-items: center;
     transition: ease-in-out 0.2s;
+    cursor: pointer;
 }
 
-#evaluationItem:hover{
-    background: var(--main-color2);
-}
 
 #dates{
     display: flex;
@@ -39,7 +37,7 @@
     margin-inline: 10px;
 }
 
-#buttons{
+#buttons-evaluation{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -61,4 +59,11 @@
 #update_delete_button:hover{
     transform: scale(1.1);
     background-color: #0065ad;
+}
+
+@media screen and (max-width: 768px){
+    #buttons-evaluation{
+        flex-direction: column;
+
+    }
 }

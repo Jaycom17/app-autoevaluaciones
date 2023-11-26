@@ -1,0 +1,18 @@
+#graphic{
+    width: 45%;
+    height: 40%;
+    margin-bottom: 2rem;
+    border: 1px dotted #808080;
+}
+
+@media (max-width: 860px) {
+    #graphic {
+        width: 70%;
+    }
+}
+
+@media (max-width: 570px) {
+    #graphic {
+        width: 90%;
+    }
+}

@@ -4,12 +4,6 @@ body {
   font-family: 'Sriracha', cursive;
 }
 
-/* Etiqueta meta viewport para diseño responsivo */
-meta {
-  name: viewport;
-  content: width=device-width, initial-scale=1.0;
-}
-
 /* Estilos para el header */
 .header {
   display: flex;

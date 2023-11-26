@@ -1,6 +1,6 @@
 import axios from "./axios.js";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const createPeriod = async (period) => {
   const result = await axios.post(`${API_URL}/period`, period).catch(() => {

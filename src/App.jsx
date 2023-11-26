@@ -10,6 +10,9 @@ import SelfEvaluationList from './components/SelfEvaluationList.jsx'
 import SelfEvaluationItem from './components/SelfEvaluationItem.jsx'
 import UpdateAcademicPeriodForm from './components/UpdateAcademicPeriodForm.jsx'
 import UpdateLaborForm from './components/UpdateLaborForm.jsx'
+import SelfEvaluationShow from './components/SelfEvaluationShow.jsx'
+import ShowStatics from './components/ShowStatics.jsx'
+import UpdateSelfEvaluation from './components/UpdateSelftEvaluation.jsx'
 
 import ProtectedRoute from './routes/ProtectedRoute.jsx'
 
@@ -33,6 +36,9 @@ function App() {
             <Route path="/self-evaluations" element= {<> <NavigationItem/> <SelfEvaluationList/> </>}/>
             <Route path="/self-evaluations/create" element= {<> <NavigationItem/> <SelfEvaluationForm /> </>}/>
             <Route path="/self-evaluations/make" element= {<> <NavigationItem/> <SelfEvaluationItem/> </>}/>
+            <Route path="/self-evaluations/show/:userId/:perName" element= {<> <NavigationItem/> <SelfEvaluationShow/> </>}/>
+            <Route path="/statistics" element= {<> <NavigationItem/> <ShowStatics/> </>}/>
+            <Route path="/self-evaluations/update/:usrId/:perNombre" element= {<> <NavigationItem/> <UpdateSelfEvaluation/> </>}/>
             <Route path="*" component={() => <Navigate to="/" replace/>} />
           </Route>
         </Routes>

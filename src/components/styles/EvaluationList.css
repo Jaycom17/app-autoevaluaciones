@@ -4,14 +4,39 @@
     gap: 1rem;
 }
 
-@media (max-width: 860px) {
+#main{
+    display: flex;
+    flex-direction: column;
+}
+
+#search-evaluation{
+    margin: 1rem auto;
+    width: 50%;
+}
+
+@media (max-width: 1800px) {
     #List {
         grid-template-columns: repeat(2,1fr);
+    }
+
+    #search-evaluation{
+        width: 70%;
+    }
+}
+
+@media (max-width: 1200px) {
+    #List {
+        grid-template-columns: repeat(1,1fr);
+    }
+
+    #search-evaluation{
+        width: 70%;
     }
 }
 
 @media (max-width: 570px) {
-    #List {
-        grid-template-columns: repeat(1,1fr);
+
+    #search-evaluation{
+        width: 90%;
     }
 }

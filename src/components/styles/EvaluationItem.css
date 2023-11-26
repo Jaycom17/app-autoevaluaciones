@@ -11,6 +11,19 @@
   flex-direction: column;
 }
 
+#btn-download{
+  text-decoration: none;
+  background-color: var(--main-color2);
+  padding: 5px;
+  border-radius: 4px;
+  color: white;
+  transition: ease-in-out 0.3s;
+}
+
+#btn-download:hover{
+  background-color: var(--main-color4);
+} 
+
 textarea, input, select{
   outline: none;
   padding: 4px;

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { getEvaluationbyProfessor } from "../api/evaluation";
+import { getEvaluationbyProfessor } from "../api/evaluation.js";
 
 import { useAuth } from "../context/AuthContext";
 
 import { makeEvaluation } from "../api/evaluation.js";
 
 import { useForm  } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 import "./styles/EvaluationItem.css";
 
@@ -16,6 +17,8 @@ function SelfEvaluationItem() {
 
   const { user } = useAuth();
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -23,15 +26,50 @@ function SelfEvaluationItem() {
     reset,
   } = useForm();
 
+  const onSubmit = (values) => {
+    const evaluations = Object.keys(values).reduce((result, key) => {
+      const [field, index] = key.split(/(\d+)/).filter(Boolean);
+
+      if (field !== undefined) {
+        if (!result[index]) {
+          result[index] = {};
+        }
+
+        result[index][field] = values[key];
+        result[index].eva_id = index; // Add eva_id attribute to the object
+      }
+
+      return result;
+    }, []).filter((evaluation) => Object.keys(evaluation).length > 0); // Filter out empty evaluations
+
+    if (evaluations.length === 0) {
+      alert("Debe agregar al menos una evaluación");
+      return;
+    }
+    
+    makeEvaluation(evaluations).then(() => {
+      alert("Evaluación creada exitosamente");
+      navigate("/",{replace:true})
+      reset();
+    }).catch((err) => {
+      console.log(err);
+      alert("Error al crear la evaluación");
+    });
+
+  }
+
   useEffect(() => {
     getEvaluationbyProfessor(user.usr_identificacion).then((res) => {
-      setEvaluations(res);
+      console.log(res);
+      setEvaluations(res.filter((evaluation) => evaluation.eva_estado === 0));
       setGeneralInfo(res[0]);
     }).catch((err) => {
       setEvaluations([]);
       console.log(err);
     });
   },[]);
+
+  if(evaluations.length === 0) return (<div>No tiene evaluaciones activas</div>);
 
   return (
     <div id="evaluation-item">
@@ -53,9 +91,7 @@ function SelfEvaluationItem() {
           <h3> Identificacion: {generalInfo.usr_identificacion}</h3>
         </article>
       </div>
-      <form onSubmit={handleSubmit((values)=>{
-        console.log(values);
-      })}>
+      <form onSubmit={handleSubmit(onSubmit)}>
       <table class="table">
         <tbody>
           {evaluations.map((evaluation, i)=>{
@@ -75,11 +111,11 @@ function SelfEvaluationItem() {
                   {
                     evaluation.tl_descripcion.toLowerCase() == "docencia"? 
                     <textarea rows="4" cols="30" name="eva_resultado" {...register(`eva_resultado${evaluation.eva_id}`, { required: true })}></textarea>:
-                    <input type="file" />
+                    <input type="file" multiple={false} {...register(`eva_resultado${evaluation.eva_id}`, { required: true })}/>
                   }
                 </td>
                 <td data-label="Evaluación">
-                  <input type="number " name="eva_puntaje" {...register(`eva_puntaje${evaluation.eva_id}`, { required: true })}/>
+                  <input type="number" name="eva_puntaje" {...register(`eva_puntaje${evaluation.eva_id}`, { required: true })}/>
                 </td>
               </tr>
               </div>

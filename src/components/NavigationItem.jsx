@@ -25,7 +25,7 @@ const NavigationItem = () => {
               Home
             </Nav.Link>
 
-            {actualRole === "coordinador" && (
+            {(actualRole === "coordinador" || actualRole === "decano") && (
               <NavDropdown title="Gestion Labor" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to={"/labor/create"}>
                   Crear Labor
@@ -44,14 +44,15 @@ const NavigationItem = () => {
                   Realizar Autoevaluación
                 </NavDropdown.Item>
               </NavDropdown>
-            ) : actualRole === "coordinador" ? (
+            ) : (actualRole === "coordinador" || actualRole === "decano") ? (
               <NavDropdown
                 title="Gestion Autoevaluacion"
                 id="basic-nav-dropdown"
-              >
+              > {actualRole !== "decano" &&
                 <NavDropdown.Item as={Link} to={"/self-evaluations/make"}>
                   Realizar Autoevaluación
                 </NavDropdown.Item>
+                }
 
                 <NavDropdown.Item as={Link} to={"/self-evaluations/create"}>
                   Crear Autoevaluación
@@ -70,7 +71,7 @@ const NavigationItem = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             )}
-            {actualRole === "coordinador" && (
+            {(actualRole === "coordinador" || actualRole === "decano") && (
             <NavDropdown title="Gestion Periodo" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to={"/academic-periods/create"}>
                 Crear Periodo
@@ -80,6 +81,13 @@ const NavigationItem = () => {
               </NavDropdown.Item>
             </NavDropdown>
             )}
+            {(actualRole === "coordinador" || actualRole === "decano") && (
+              <NavDropdown title="Estadísticas" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to={"/statistics"}>
+                Mostar Estadísticas
+              </NavDropdown.Item>
+            </NavDropdown>)}
+            
             <NavDropdown title="Usuario" id="basic-nav-dropdown">
               <NavDropdown.Item as={Button} onClick={singout}>
                 Cerrar Sesión
