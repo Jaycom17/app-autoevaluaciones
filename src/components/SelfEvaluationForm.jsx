@@ -126,6 +126,7 @@ function SelfEvaluationForm() {
         }
 
         let evaluation = {usr_id, eva_period, evaluations};
+        
         console.log(evaluation);
 
         createEvaluation(evaluation).then((res) => {

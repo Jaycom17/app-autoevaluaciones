@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true);
             setHaveError(null);
             setActualRole(res.usu_rol);
-            console.log(res);
         }).catch((err) => {
             setIsAuthenticated(false);
             setHaveError(err.response.data);

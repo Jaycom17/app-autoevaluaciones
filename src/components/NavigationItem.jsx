@@ -1,6 +1,6 @@
 // Importaciones
 import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./styles/NavigationItem.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,6 +9,13 @@ import { useAuth } from "../context/AuthContext.jsx";
 
 const NavigationItem = () => {
   const { actualRole, singout } = useAuth();
+
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    singout();
+    navigate("/login");
+  }
 
   return (
     <Navbar expand="lg" id="navbar">
@@ -89,7 +96,7 @@ const NavigationItem = () => {
             </NavDropdown>)}
             
             <NavDropdown title="Usuario" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Button} onClick={singout}>
+              <NavDropdown.Item as={Button} onClick={logOut}>
                 Cerrar Sesión
               </NavDropdown.Item>
             </NavDropdown>

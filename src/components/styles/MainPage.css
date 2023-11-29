@@ -4,6 +4,44 @@ body {
   font-family: 'Sriracha', cursive;
 }
 
+#notification-item{
+  text-decoration: none;
+  position: absolute;
+  color: #000;
+  background-color: #8C8984;
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 10px;
+  animation: vibrateNotification 1s ease infinite;
+}
+
+#notification-item:hover{
+  background-color: #8C8984;
+  color: #fff;
+  animation: none;
+}
+
+@keyframes vibrateNotification {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(0);
+  }
+  40% {
+    transform: translate(2px, -2px);
+  }
+  60% {
+    transform: translate(-2px, 2px);
+  }
+  80% {
+    transform: translate(0);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
 /* Estilos para el header */
 .header {
   display: flex;

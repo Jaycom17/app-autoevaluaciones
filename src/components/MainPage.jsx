@@ -1,10 +1,21 @@
+import { Link } from 'react-router-dom';
+
+import { useAuth } from '../context/AuthContext';
+
 import './styles/MainPage.css';
 
 function MainPage() {
+    const { user } = useAuth();
     return (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <main>
+                
+        {
+            user.usu_notificacion === 's' && (<Link id='notification-item' to={"/self-evaluations/make"}>
+            Tiene una autoevaluación pendiente
+          </Link>)
+        }
                 <div className="intro">
                     <h1>Gestión Académica</h1>
                     <p>Nuestra aplicación web de gestión académica abarca labores, seguimiento académico y autoevaluación docente</p>
@@ -33,9 +44,8 @@ function MainPage() {
                     <div className="about-me-text">
                         <h2>Sobre Nosotros</h2>
                         <p>Somos un equipo de desarrolladores de la Universidad del Cauca, encargados de crear y mejorar esta aplicación de gestión académica. Estamos dedicados a proporcionar soluciones eficientes para facilitar la administración educativa en nuestra institución.</p>
-                        <a href="https://scontent.cdninstagram.com/v/t51.2885-15/316477849_523756596295247_7116080319620304079_n.webp?se=7&stp=dst-jpg_e35&efg=eyJ2ZW5jb2RlX3RhZyI6ImltYWdlX3VybGdlbi4xMDgweDEwODAuc2RyIn0&_nc_ht=scontent.cdninstagram.com&_nc_cat=111&_nc_ohc=Unhh26utdeAAX-1moJO&edm=APs17CUBAAAA&ccb=7-5&ig_cache_key=Mjk3ODE1NzI3OTEzNzM2ODY0Mw%3D%3D.2-ccb7-5&oh=00_AfDkWA47EIwDvEwEyWb6qohLdJMLslC0cz68BXhvXCywEA&oe=653F0BD4&_nc_sid=10d13b">Mostrar Fantasma</a>
                     </div>
-                    <img src="" alt="me" />
+                    <img src="./WhatsApp Image 2023-11-16 at 9.59.11 PM.jpeg" alt="me" />
                 </div>
             </main>
             <footer className="footer">
