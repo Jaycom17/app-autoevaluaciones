@@ -4,7 +4,7 @@ import { getLabors } from "../api/labor.js";
 import { getProfessors } from "../api/user.js";
 import { getPeriods } from "../api/period.js";
 
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 
 import { createEvaluation } from "../api/evaluation.js";
 
@@ -13,6 +13,7 @@ import "./styles/EvaluationForm.css";
 
 function SelfEvaluationForm() {
   const [labors, setLabors] = useState([]);
+  const [auxLabors, setAuxLabors] = useState([]);
   const [professors, setProfessors] = useState([]);
   const [periods, setPeriods] = useState([]);
 
@@ -37,6 +38,7 @@ function SelfEvaluationForm() {
 
     getLabors().then((res) => {
       setLabors(res);
+      setAuxLabors(res);
     }).catch((err) => {
       setLabors([]);
       console.log(err);
@@ -90,6 +92,15 @@ function SelfEvaluationForm() {
         </select>
         </article>
       </div>
+
+      <div id="control-buttons">
+      <button onClick={newEvaluation} id="new-evaluation">
+        Agregar Evaluación
+      </button>
+      <button onClick={removeEvaluation} id="delete-evaluation">
+        quitar Evaluación
+      </button>
+      </div>
       
       <form id="form" onSubmit={handleSubmit ((values)=>{
 
@@ -120,14 +131,20 @@ function SelfEvaluationForm() {
           return result;
         }, []);
 
+        const valores = new Set();
+        evaluations.forEach(item => valores.add(item.eva_labor));
+
+        if(valores.size !== evaluations.length){
+          alert("No puede haber labores repetidas");
+          return;
+        }
+
         if(evaluations.length === 0){
           alert("Debe agregar al menos una evaluación");
           return;
         }
 
         let evaluation = {usr_id, eva_period, evaluations};
-        
-        console.log(evaluation);
 
         createEvaluation(evaluation).then((res) => {
           if (res) {
@@ -179,14 +196,6 @@ function SelfEvaluationForm() {
         <button type="submit">Crear</button>
       </section>
       </form>
-      <div id="control-buttons">
-      <button onClick={newEvaluation} id="new-evaluation">
-        Agregar Evaluación
-      </button>
-      <button onClick={removeEvaluation} id="delete-evaluation">
-        quitar Evaluación
-      </button>
-      </div>
     </div>
   );
 }

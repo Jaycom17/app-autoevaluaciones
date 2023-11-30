@@ -3,13 +3,15 @@ import axios from "./axios.js";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const createLabor = async (labor) => {
-  const result = await axios.post(`${API_URL}/labor`, labor).catch(() => {
-    return false;
+  let output = null;
+  const result = await axios.post(`${API_URL}/labor`, labor).catch((err) => {
+    output = err.response.data;
   });
 
-  if (result) {
-    return true;
+  if(output){
+    return output;
   }
+  return result.data; 
 };
 
 export const getLaborById = async (id) => {

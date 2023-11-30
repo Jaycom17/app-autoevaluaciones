@@ -8,21 +8,16 @@ import "./styles/AcademicPeriod_LaborForm.css";
 
 function CreateLaborForm() {
 
-  const[currentLaborType, setCurrentLaborType] = useState([]);
-
-  useEffect(()=> {
-    setCurrentLaborType([{tl_descripcion:"Docencia"},
-                          {tl_descripcion:"Trabajos Docencia"},
-                          {tl_descripcion:"Proyectos Investigación"},
-                          {tl_descripcion:"Trabajos Investigación"},
-                          {tl_descripcion:"Administración"},
-                          {tl_descripcion:"Asesoría"},
-                          {tl_descripcion:"Servicios"},
-                          {tl_descripcion:"Extensión"},
-                          {tl_descripcion:"Capacitación"},
-                          {tl_descripcion:"Otros Servicios"}]);
-  }); 
-
+  const[currentLaborType] = useState([{tl_descripcion:"Docencia"},
+  {tl_descripcion:"Trabajos Docencia"},
+  {tl_descripcion:"Proyectos Investigación"},
+  {tl_descripcion:"Trabajos Investigación"},
+  {tl_descripcion:"Administración"},
+  {tl_descripcion:"Asesoría"},
+  {tl_descripcion:"Servicios"},
+  {tl_descripcion:"Extensión"},
+  {tl_descripcion:"Capacitación"},
+  {tl_descripcion:"Otros Servicios"}]);
 
   const {
     register,
@@ -35,11 +30,10 @@ function CreateLaborForm() {
     <div id="form_container">
       <form id="form_create_update" onSubmit={handleSubmit(async (values) => {
         const response = await createLabor(values);
-        if (response) {
-          alert("Labor creada con éxito");
+        console.log(await response);
+        alert(response.message);
+        if (response.status !== 'error') {
           reset();
-        } else {
-          alert("Error al crear la labor");
         }
       })}>
         <h1>Crear labor</h1>
