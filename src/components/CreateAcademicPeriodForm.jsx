@@ -41,11 +41,10 @@ function CreateAcademicPeriodForm() {
           }
 
           const response = await createPeriod(values);
-          if (response) {
-            alert("Periodo creado con éxito");
+          console.log(await response);
+          alert(response.message);
+          if (response.status !== '200') {
             reset();
-          } else {
-            alert("Error al crear el Periodo");
           }
         })}
       >
