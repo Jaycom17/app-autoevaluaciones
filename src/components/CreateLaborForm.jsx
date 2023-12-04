@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import { createLabor } from "../api/labor.js";
+import { createLabor, getLaborTypes, getLaborMinMaxHours } from "../api/labor.js";
 
 import { useEffect, useState } from "react";
 
@@ -8,16 +8,34 @@ import "./styles/AcademicPeriod_LaborForm.css";
 
 function CreateLaborForm() {
 
-  const[currentLaborType] = useState([{tl_descripcion:"Docencia"},
-  {tl_descripcion:"Trabajos Docencia"},
-  {tl_descripcion:"Proyectos Investigación"},
-  {tl_descripcion:"Trabajos Investigación"},
-  {tl_descripcion:"Administración"},
-  {tl_descripcion:"Asesoría"},
-  {tl_descripcion:"Servicios"},
-  {tl_descripcion:"Extensión"},
-  {tl_descripcion:"Capacitación"},
-  {tl_descripcion:"Otros Servicios"}]);
+  const[LaborType, setLaborType] = useState([]);
+
+  const[selectedLT, setSelectedLT] = useState('');
+
+  const[minHours, setMinHours] = useState();
+  const[maxHours, setMaxHours] = useState();
+
+  useEffect(() => {
+    getLaborTypes().then((res) => {
+      setLaborType(res);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+  const handleSelectChange = (e) => {
+    const selectedOption = e.target.value;
+    setSelectedLT(selectedOption);
+    console.log(selectedLT);
+    try {
+      getLaborMinMaxHours(selectedOption).then((res) => {
+        setMinHours(res.tl_min_horas);
+        setMaxHours(res.tl_max_horas);
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const {
     register,
@@ -38,22 +56,19 @@ function CreateLaborForm() {
       })}>
         <h1>Crear labor</h1>
         <label>Tipo de labor</label>
-        {errors.tl_descripcion && <p style={{ color: 'red', fontSize: 'smaller' }}>debe seleccionar un tipo</p>}
-        <select name="TipoL" id="select_text_input" {...register("tl_descripcion", { required: true })}>
-          <option disabled hidden selected>
-            Tipo de labor
-          </option>
-          {currentLaborType.map((tipo, i) => (
+        {errors.tl_descripcion && <p style={{ color: 'red', fontSize: 'smaller' }}>Debe seleccionar un tipo</p>}
+        <select name="TipoL" id="select_text_input" {...register("tl_descripcion", { required: true, onChange: handleSelectChange })} >
+          <option disabled hidden selected></option>
+          {LaborType.map((tipo, i) => (
             <option key={i}>{tipo.tl_descripcion}</option>
           ))}
         </select>
         <label>Nombre de labor</label>
-        {errors.lab_nombre && <p style={{ color: 'red', fontSize: 'smaller' }}>debe ingresar el nombre</p>}
-        <input type="text" name="" id="select_text_input"  {...register("lab_nombre", { required: true })} />
+        {errors.lab_nombre && <p style={{ color: 'red', fontSize: 'smaller' }}>Debe ingresar el nombre</p>}
+        <input type="text" name="" id="select_text_input" {...register("lab_nombre", { required: true })} />
         <label>Horas asignadas</label>
-        {errors.lab_horas && <p style={{ color: 'red', fontSize: 'smaller' }}>debe ingresar las horas</p>}
-        <input type="number" name="" id="select_text_input" {...register("lab_horas", { required: true })} />
-
+        {errors.lab_horas && <p style={{ color: 'red', fontSize: 'smaller' }}> {errors.lab_horas.type === 'required' ? 'Debe ingresar las horas' : ''}</p>}
+        <input type="number" name="" id="select_text_input" min={minHours} max={maxHours} {...register("lab_horas", { required: true, })} />
         <button type="submit" id="create_update_button">
           Crear labor
         </button>
