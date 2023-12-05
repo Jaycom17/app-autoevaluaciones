@@ -4,7 +4,8 @@ import { getLabors } from "../api/labor.js";
 import { getProfessors } from "../api/user.js";
 import { getPeriods } from "../api/period.js";
 
-import { set, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import Select from "react-select";
 
 import { createEvaluation } from "../api/evaluation.js";
 
@@ -13,9 +14,13 @@ import "./styles/EvaluationForm.css";
 
 function SelfEvaluationForm() {
   const [labors, setLabors] = useState([]);
-  const [auxLabors, setAuxLabors] = useState([]);
-  const [professors, setProfessors] = useState([]);
-  const [periods, setPeriods] = useState([]);
+  const [laborsOptions, setLaborsOptions] = useState([]);
+
+  const [professorsOptions, setProfessorsOptions] = useState([]);
+  const [selectedProfessor, setSelectedProfessor] = useState(null);
+
+  const [selectedPeriod, setSelectedPeriod] = useState(null);
+  const [periodsOptions, setPeriodsOptions] = useState([]);
 
   const [evaluations, setEvaluations] = useState([]);
 
@@ -24,39 +29,77 @@ function SelfEvaluationForm() {
     handleSubmit,
     formState: { errors },
     reset,
+    setError,
+    control,
   } = useForm();
 
   const newEvaluation = () => {
-    if(evaluations.length < labors.length){ setEvaluations([...evaluations, { id: evaluations.length + 1 }])};
+    if(!selectedProfessor){
+      alert("Debe seleccionar un docente");
+      return;
+    }
+    if (evaluations.length < labors.length) {
+      setEvaluations([...evaluations, { id: evaluations.length + 1 }]);
+    }
   };
 
   const removeEvaluation = () => {
-    if(evaluations.length > 0){ setEvaluations(evaluations.slice(0, -1))};
+    if (evaluations.length > 0) {
+      setEvaluations(evaluations.slice(0, -1));
+    }
+  };
+
+  const handleChangeProfessor = (e) => {
+    setSelectedProfessor(e.value);
+  };
+
+  const handleChangePeriod = (e) => {
+    setSelectedPeriod(e.value);
   };
 
   useEffect(() => {
+    getLabors()
+      .then((res) => {
+        setLabors(res);
 
-    getLabors().then((res) => {
-      setLabors(res);
-      setAuxLabors(res);
-    }).catch((err) => {
-      setLabors([]);
-      console.log(err);
-    });
+        const options = res.map((labor) => ({
+          value: labor.lab_nombre,
+          label: labor.lab_nombre,
+        }));
 
-    getProfessors().then((res) => {
-      setProfessors(res);
-    }).catch((err) => {
-      setProfessors([]);
-      console.log(err);
-    });
+        setLaborsOptions(options);
+      })
+      .catch((err) => {
+        setLabors([]);
+        console.log(err);
+      });
 
-    getPeriods().then((res) => {
-      setPeriods(res);
-    }).catch((err) => {
-      setPeriods([]);
-      console.log(err);
-    });
+    getProfessors()
+      .then((res) => {
+
+        const options = res.map((professor) => ({
+          value: professor.usr_identificacion,
+          label: `${professor.usu_nombre} ${professor.usu_apellido} - ${professor.usr_identificacion}`,
+        }));
+
+        setProfessorsOptions(options);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    getPeriods()
+      .then((res) => {
+        const options = res.map((period) => ({
+          value: period.per_nombre,
+          label: period.per_nombre,
+        }));
+
+        setPeriodsOptions(options);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -70,131 +113,144 @@ function SelfEvaluationForm() {
 
       <div id="information">
         <article id="data-professor">
-        <select name="usr_id" id="select-important-professor">
-          <option disabled hidden value="" selected>
-            Seleccione un docente
-          </option>
-          {professors.map((professor) => (
-            <option key={professor.usr_identificacion} value={professor.usr_identificacion}>
-              {professor.usu_nombre} {professor.usu_apellido} - {professor.usr_identificacion}
-            </option>
-          ))}
-        </select>
-        <select name="eva_period" id="select-important-period">
-          <option disabled hidden value="" selected>
-            Seleccione un perido
-          </option>
-          {periods.map((period) => (
-            <option key={period.per_id} value={period.per_nombre}>
-              {period.per_nombre}
-            </option>
-          ))}
-        </select>
+          <Select
+            name="usr_id"
+            id="select-important-professor"
+            options={professorsOptions}
+            placeholder="Seleccione un docente"
+            onChange={handleChangeProfessor}
+          />
+
+          <Select
+            name="eva_period"
+            id="select-important-period"
+            options={periodsOptions}
+            placeholder="Seleccione un periodo"
+            onChange={handleChangePeriod}
+          />
         </article>
       </div>
 
       <div id="control-buttons">
-      <button onClick={newEvaluation} id="new-evaluation">
-        Agregar Evaluación
-      </button>
-      <button onClick={removeEvaluation} id="delete-evaluation">
-        quitar Evaluación
-      </button>
+        <button onClick={newEvaluation} id="new-evaluation">
+          Agregar Evaluación
+        </button>
+        <button onClick={removeEvaluation} id="delete-evaluation">
+          quitar Evaluación
+        </button>
       </div>
-      
-      <form id="form" onSubmit={handleSubmit ((values)=>{
 
-        let usr_id = document.getElementById("select-important-professor").value;
-        let eva_period = document.getElementById("select-important-period").value;
+      <form
+        id="form"
+        onSubmit={handleSubmit((values) => {
 
-        if (usr_id === "") {
-          alert("Debe seleccionar un docente");
-          return;
-        }
-
-        if (eva_period === "") {
-          alert("Debe seleccionar un periodo");
-          return;
-        }
-
-        const evaluations = Object.keys(values).reduce((result, key) => {
-          const [field, index] = key.split(/(\d+)/).filter(Boolean);
-        
-          if (field && index !== undefined) {
-            if (!result[index]) {
-              result[index] = {};
-            }
-        
-            result[index][field] = values[key];
+          if (!selectedProfessor) {
+            alert("Debe seleccionar un docente");
+            return;
           }
-        
-          return result;
-        }, []);
 
-        const valores = new Set();
-        evaluations.forEach(item => valores.add(item.eva_labor));
+          if (!selectedPeriod) {
+            alert("Debe seleccionar un periodo");
+            return;
+          }
 
-        if(valores.size !== evaluations.length){
-          alert("No puede haber labores repetidas");
-          return;
-        }
+          const evaluations = Object.keys(values).reduce((result, key) => {
+            const [field, index] = key.split(/(\d+)/).filter(Boolean);
 
-        if(evaluations.length === 0){
-          alert("Debe agregar al menos una evaluación");
-          return;
-        }
+            if (field && index !== undefined) {
+              if (!result[index]) {
+                result[index] = {};
+              }
 
-        let evaluation = {usr_id, eva_period, evaluations};
+              if(!values[key]){setError(
+                `eva_labor${index}`,
+                { type: "required", message: "Debe seleccionar una labor" }
+              ); return;}
 
-        createEvaluation(evaluation).then((res) => {
+              if(values[key].value){result[index][field] = values[key].value;}
+              else{result[index][field] = values[key];}
+              
+            }
+
+            return result;
+          }, []);
+
+          const valores = new Set();
+          evaluations.forEach((item) => valores.add(item.eva_labor));
+
+          if (valores.size !== evaluations.length) {
+            alert("No puede haber labores repetidas");
+            return;
+          }
+
+          if (evaluations.length === 0) {
+            alert("Debe agregar al menos una evaluación");
+            return;
+          }
+
+          let evaluation = { usr_id: selectedProfessor, eva_period: selectedPeriod, evaluations };
+
+          createEvaluation(evaluation).then((res) => {
           if (res) {
             reset();
             document.getElementById("select-important-professor").value = "";
             document.getElementById("select-important-period").value = "";
-        alert("Evaluación creada con éxito");
+            alert("Evaluación creada con éxito");
+            setSelectedPeriod(null);
+            setSelectedProfessor(null);
           } else {
             alert("Error al crear la evaluación");
           }}).catch((err) => {
             alert("Error al crear la evaluación");
           });
+        })}
+      >
+        {evaluations.map((evaluation, i) => (
+          <div key={evaluation.id} id="evaluation">
+            <div id="div-form">
+              <label id="labor-label">Labor: </label>
 
-      })}>
+              <Controller
+                control={control}
+                name={`eva_labor${i}`}
+                render={({ field }) => (
+                  <Select
+                  id="labor-select"
+                    {...field}
+                    options={laborsOptions}
+                    onChange={(e)=> field.onChange(e)}
+                    onBlur={(e)=> field.onBlur(field.value)}
+                  />
+                )}
+              />
 
-      {evaluations.map((evaluation, i) => (
-        <div key={evaluation.id} id="evaluation">
-          <div id="div-form">
-        <label id="labor-label">Labor: </label>
-        <select name="eva_labor" id="labor-select" {...register(`eva_labor${i}`, {required: true})} defaultValue="">
-          <option disabled hidden value="">
-            Seleccione una labor
-          </option>
-          {labors.map((labor) => (
-            <option key={labor.lab_id} value={labor.lab_nombre}>
-              {labor.lab_nombre}
-            </option>
-          ))}
-        </select>
+              <label id="labor-label">Estado</label>
+              <select
+                name="eva_state"
+                id="labor-select"
+                {...register(`eva_state${i}`, { required: true })}
+                defaultValue=""
+              >
+                <option disabled hidden value="">
+                  Seleccione un estado
+                </option>
+                <option value="0">En ejecución</option>
+                <option value="1">Terminado</option>
+              </select>
+            </div>
+            <div id="divisor"></div>
+          </div>
+        ))}
 
-        <label id="labor-label">Estado</label>
-        <select name="eva_state" id="labor-select" {...register(`eva_state${i}`, {required: true})} defaultValue="">
-          <option disabled hidden value="">
-            Seleccione un estado
-          </option>
-          <option value="0">En ejecución</option>
-          <option value="1">Terminado</option>
-        </select>
+        {Object.keys(errors).length > 0 && (
+          <span style={{ color: "red", fontSize: "smaller" }}>
+            Debe llenar todos los campos
+          </span>
+        )}
 
-        </div>
-        <div id="divisor"></div>
-        </div>
-        
-      ))}
-
-      {Object.keys(errors).length > 0 && <span style={{ color: 'red', fontSize: 'smaller' }}>Debe llenar todos los campos</span>}
-      
-      <section id="send">
-        <button type="submit">Crear</button>
-      </section>
+        <section id="send">
+          <button type="submit">Crear</button>
+        </section>
       </form>
     </div>
   );
