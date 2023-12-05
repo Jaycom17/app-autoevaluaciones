@@ -3,13 +3,15 @@ import axios from "./axios.js";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const createPeriod = async (period) => {
-  const result = await axios.post(`${API_URL}/period`, period).catch(() => {
-    return false;
+  let output = null;
+  const result = await axios.post(`${API_URL}/period`, period).catch((err) => {
+    output = err.response.data;
   });
 
-  if (result) {
-    return true;
+  if (output) {
+    return output;
   }
+  return result.data; 
 };
 
 
@@ -28,14 +30,16 @@ export const getPeriodById = async (id) => {
 
 
 export const updatePeriod = async (id, period) => {
-  const result = await axios.put(`${API_URL}/period/${id}`, period).catch(() =>{
-    return false;
+  let output = null;
+  const result = await axios.put(`${API_URL}/period/${id}`, period).catch((err) =>{
+    output = err.response.data;
   });
 
-  if(result){
-    return true;
+  if(output){
+    return output;
   }
-} 
+  return result.data;
+};
 
 export const deletePeriod = async (id) => {
   const result = await axios.delete(`${API_URL}/period/${id}`).catch(() => {

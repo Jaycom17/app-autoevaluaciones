@@ -74,14 +74,14 @@ function UpdateAcademicPeriodForm() {
         }
 
         const response = await updatePeriod(id, values);
-        if (response) {
-          alert("Período actualizado con éxito");
+        console.log(await response);
+        alert(response.message)
+        if (response.status !== 'error') {
           navigate("/academic-periods",{replace:true});
           setCurrentPeriod(values)
           reset();
-        }else{
-          alert("Error al actualizar el período");
         }
+        
       })}>
         <h1>Editar Perodo Academico</h1>
         <label>Nombre de Periodo</label>

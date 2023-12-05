@@ -24,6 +24,16 @@ export const getLabors = async () => {
   return data;
 };
 
+export const getLaborTypes = async () => {
+  const { data } = await axios.get(`${API_URL}/laborType`);
+  return data;
+};
+//////////////////////////////////////////////////////////////
+export const getLaborMinMaxHours = async (name) => {
+  const { data } = await axios.get(`${API_URL}/laborTypeH/${name}`);
+  return data;
+};
+//////////////////////////////////////////////////////////////
 export const updateLabor = async (id, labor) => {
   console.log(id, labor);
   const result = await axios.put(`${API_URL}/labor/${id}`, labor).catch(() =>{

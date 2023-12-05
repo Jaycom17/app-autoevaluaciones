@@ -1,6 +1,6 @@
 import { useForm  } from "react-hook-form";
 
-import { getLaborById, updateLabor } from "../api/labor.js";
+import { getLaborById, updateLabor, getLaborTypes, getLaborMinMaxHours } from "../api/labor.js";
 
 import "./styles/AcademicPeriod_LaborForm.css";
 
@@ -16,6 +16,11 @@ function UpdateLaborForm() {
   const [currentLabor, setCurrentLabor] = useState({});
 
   const[currentLaborType, setCurrentLaborType] = useState([]);
+
+  const[selectedLT, setSelectedLT] = useState('');
+
+  const[minHours, setMinHours] = useState(0);
+  const[maxHours, setMaxHours] = useState(0);
 
   const {id} = useParams();
 
@@ -36,21 +41,35 @@ function UpdateLaborForm() {
         lab_nombre:res.lab_nombre,
         lab_horas:res.lab_horas,
       });
+      getLaborMinMaxHours(res.tl_descripcion).then((res) => {
+        setMinHours(res.tl_min_horas);
+        setMaxHours(res.tl_max_horas);
+      })
     }).catch((err) => {
       console.log(err);
     });
 
-    setCurrentLaborType([{tl_descripcion:"Docencia"},
-                          {tl_descripcion:"Trabajos Docencia"},
-                          {tl_descripcion:"Proyectos Investigación"},
-                          {tl_descripcion:"Trabajos Investigación"},
-                          {tl_descripcion:"Administración"},
-                          {tl_descripcion:"Asesoría"},
-                          {tl_descripcion:"Servicios"},
-                          {tl_descripcion:"Extensión"},
-                          {tl_descripcion:"Capacitación"},
-                          {tl_descripcion:"Otros Servicios"}]);
+    getLaborTypes().then((res) => {
+      const laborArr = Object.values(res)
+      setCurrentLaborType(laborArr);
+    }).catch((err) => {
+      console.log(err);
+    });
   }, []);
+
+  const handleSelectChange = (e) => {
+    const selectedOption = e.target.value;
+    setSelectedLT(selectedOption);
+    console.log(selectedLT);
+    try {
+      getLaborMinMaxHours(selectedOption).then((res) => {
+        setMinHours(res.tl_min_horas);
+        setMaxHours(res.tl_max_horas);
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div id="form_container">
@@ -68,7 +87,7 @@ function UpdateLaborForm() {
         <h1>Actualizar labor</h1>
         <label>Tipo de labor</label>
         {errors.tl_descripcion && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes seleccionar un tipo de labor</p>}
-        <select name="TipoL" id="select_text_input" {...register("tl_descipcion", { required: true })}>
+        <select name="TipoL" id="select_text_input" {...register("tl_descipcion", { required: true, onChange: handleSelectChange })}>
           {currentLaborType.map((tipo, i) => (
             tipo === currentLabor.tl_descripcion ? <option key={i} value={tipo.tl_descripcion} selected>{tipo.tl_descripcion}</option> : <option key={i} value={tipo.tl_descripcion}>{tipo.tl_descripcion}</option>
           ))}
@@ -84,8 +103,8 @@ function UpdateLaborForm() {
         />
         
         <label>Horas asignadas</label>
-        {errors.lab_horas && <p style={{ color: 'red', fontSize: 'smaller' }}>Debes ingresar las horas</p>}
-        <input type="number" name="lab_horas" id="select_text_input" {...register("lab_horas", { required: true })} />
+        {errors.lab_horas && <p style={{ color: 'red', fontSize: 'smaller' }}> {errors.lab_horas.type === 'required' ? 'Debe ingresar las horas' : ''}</p>}
+        <input type="number" name="" id="select_text_input" min={minHours} max={maxHours} {...register("lab_horas", { required: true, })} />
         <button type="submit" id="create_update_button">
           Confirmar cambios
         </button>
