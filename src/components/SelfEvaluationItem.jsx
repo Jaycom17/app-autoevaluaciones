@@ -113,7 +113,7 @@ function SelfEvaluationItem() {
                   }
                 </td>
                 <td data-label="Evaluación">
-                  <input type="number" name="eva_puntaje" {...register(`eva_puntaje${evaluation.eva_id}`, { required: true })}/>
+                  <input type="number" name="eva_puntaje" min={'0'} max={'100'} {...register(`eva_puntaje${evaluation.eva_id}`, { required: true })}/>
                 </td>
               </tr>
               </div>
