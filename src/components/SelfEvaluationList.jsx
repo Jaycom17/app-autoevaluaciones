@@ -18,18 +18,18 @@ function SelfEvaluationList() {
   const delEvaluation = (usr_identification, per_nombre) => {
     selfEvaluationListAll.forEach((evaluation) => {
       if (evaluation.usr_identificacion === usr_identification && evaluation.per_nombre === per_nombre) {
-        deleteEvaluation(evaluation.eva_id).then((res) => {
-          if (res) {
-            navigate("/self-evaluations", {replace: true});
-          }
-        }).catch(() => {
+        deleteEvaluation(evaluation.eva_id).then(() => {}).catch(() => {
           alert("No se pudo eliminar la evaluación");
           return;
         });
-
-        alert("Evaluación eliminada correctamente");
       }
     });
+    let selfEvaluationListAux = [];
+    selfEvaluationListAux = selfEvaluationList.filter((evaluation) => {
+      return !(evaluation.usr_identificacion === usr_identification && evaluation.per_nombre === per_nombre);
+    });
+    setSelfEvaluationList(selfEvaluationListAux);
+    alert("Evaluación eliminada correctamente");
   }
 
   const handleUpdate = (usr_identificacion, per_nombre) => {

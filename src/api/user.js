@@ -21,3 +21,8 @@ export const getProfessors = async () => {
   const { data } = await axios.get(`${API_URL}/user/professors`);
   return data;
 }
+
+export const getCordinator = async () => {
+  const { data } = await axios.get(`${API_URL}/user/cordinator`);
+  return data;
+}

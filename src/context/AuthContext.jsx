@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [haveError, setHaveError] = useState(null);
     const [actualRole, setActualRole] = useState(null);
+    const [isNotificated, setIsNotificated] = useState(false);
 
     const singin = (user) => {
         login(user).then((res) => {
@@ -25,6 +26,7 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true);
             setHaveError(null);
             setActualRole(res.usu_rol);
+            setIsNotificated(res.usu_notificacion === 's');
         }).catch((err) => {
             setIsAuthenticated(false);
             setHaveError(err.response.data);
@@ -36,28 +38,41 @@ export const AuthProvider = ({ children }) => {
             setUser(null);
             setIsAuthenticated(false);
             setActualRole(null);
+            setIsNotificated(false);
         }).catch((err) => {
             console.log(err);
+            setUser(null);
+            setIsAuthenticated(false);
+            setActualRole(null);
+            setIsNotificated(false);
         });
     }
 
     useEffect(() => {
         const cookies = Cookies.get();
-        if(cookies.token){
+        if(!cookies.token){
+            setIsAuthenticated(false);
+            setActualRole(null);
+            setIsNotificated(false);
+            setUser(null);
+        }else{
             profile().then((res) => {
                 setUser(res);
                 setIsAuthenticated(true);
                 setActualRole(res.usu_rol);
             }).catch((err) => {
                 console.log(err);
+                setUser(null);
                 setIsAuthenticated(false);
+                setActualRole(null);
+                setIsNotificated(false);
             });
         }
     });
 
 
     return (
-        <AuthContext.Provider value={{singin, user, isAuthenticated, haveError, actualRole, singout}}>
+        <AuthContext.Provider value={{singin, user, isAuthenticated, haveError, actualRole, singout, isNotificated, setIsNotificated}}>
             {children}
         </AuthContext.Provider>
     );

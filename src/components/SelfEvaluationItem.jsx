@@ -15,7 +15,7 @@ function SelfEvaluationItem() {
   const [evaluations, setEvaluations] = useState([]);
   const [generalInfo, setGeneralInfo] = useState({});
 
-  const { user } = useAuth();
+  const { user, setIsNotificated } = useAuth();
 
   const navigate = useNavigate();
 
@@ -49,6 +49,7 @@ function SelfEvaluationItem() {
     
     makeEvaluation(evaluations).then(() => {
       alert("Evaluación creada exitosamente");
+      setIsNotificated(false);
       navigate("/",{replace:true})
       reset();
     }).catch((err) => {
@@ -60,7 +61,6 @@ function SelfEvaluationItem() {
 
   useEffect(() => {
     getEvaluationbyProfessor(user.usr_identificacion).then((res) => {
-      console.log(res);
       setEvaluations(res.filter((evaluation) => evaluation.eva_estado === 0));
       setGeneralInfo(res[0]);
     }).catch((err) => {
@@ -92,7 +92,7 @@ function SelfEvaluationItem() {
         </article>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-      <table class="table">
+      <table className="table">
         <tbody>
           {evaluations.map((evaluation, i)=>{
             return(

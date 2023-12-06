@@ -31,6 +31,19 @@ function ShowStatics() {
         });
     }, []);
 
+    if (!averageScoreByLabor || !averageScoreByPeriod || !numberOfEvaluationsByLaborType) {
+        return (
+            <div id="graphic-list">
+                <h3>Puntaje promedio por labor</h3>
+                <p>No hay datos para mostrar</p>
+                <h3>Puntaje promedio por periodo</h3>
+                <p>No hay datos para mostrar</p>
+                <h3>Numero de evaluaciones por tipo de labor</h3>
+                <p>No hay datos para mostrar</p>
+            </div>
+        );
+    }
+
   return (
     <div id="graphic-list">
       <h3>Puntaje promedio por labor</h3>

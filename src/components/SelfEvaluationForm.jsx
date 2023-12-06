@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { getLabors } from "../api/labor.js";
-import { getProfessors } from "../api/user.js";
+import { getProfessors, getCordinator } from "../api/user.js";
 import { getPeriods } from "../api/period.js";
 
 import { Controller, useForm } from "react-hook-form";
@@ -9,10 +9,15 @@ import Select from "react-select";
 
 import { createEvaluation } from "../api/evaluation.js";
 
+import { useAuth } from "../context/AuthContext.jsx";
+
 import "./styles/EvaluationItem.css";
 import "./styles/EvaluationForm.css";
 
 function SelfEvaluationForm() {
+
+  const { actualRole } = useAuth();
+
   const [labors, setLabors] = useState([]);
   const [laborsOptions, setLaborsOptions] = useState([]);
 
@@ -76,13 +81,42 @@ function SelfEvaluationForm() {
 
     getProfessors()
       .then((res) => {
+        const options = [];
+        if (actualRole === "decano") {
+          getCordinator()
+            .then((coordinator) => {
+              const cor = {
+                value: coordinator.usr_identificacion,
+                label: `Coordinador: ${coordinator.usu_nombre} ${coordinator.usu_apellido} - ${coordinator.usr_identificacion}`,
+              };
 
-        const options = res.map((professor) => ({
-          value: professor.usr_identificacion,
-          label: `${professor.usu_nombre} ${professor.usu_apellido} - ${professor.usr_identificacion}`,
-        }));
+              options.push(cor);
+              res.forEach((professor) => {
+                const option = {
+                  value: professor.usr_identificacion,
+                  label: `${professor.usu_nombre} ${professor.usu_apellido} - ${professor.usr_identificacion}`,
+                };
 
-        setProfessorsOptions(options);
+                options.push(option);
+              });
+
+              setProfessorsOptions(options);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          res.forEach((professor) => {
+            const option = {
+              value: professor.usr_identificacion,
+              label: `${professor.usu_nombre} ${professor.usu_apellido} - ${professor.usr_identificacion}`,
+            };
+
+            options.push(option);
+          });
+
+          setProfessorsOptions(options);
+        }
       })
       .catch((err) => {
         console.log(err);

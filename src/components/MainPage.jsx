@@ -5,14 +5,14 @@ import { useAuth } from '../context/AuthContext';
 import './styles/MainPage.css';
 
 function MainPage() {
-    const { user } = useAuth();
+    const { isNotificated } = useAuth();
     return (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
             <main>
                 
         {
-            user.usu_notificacion === 's' && (<Link id='notification-item' to={"/self-evaluations/make"}>
+            isNotificated && (<Link id='notification-item' to={"/self-evaluations/make"}>
             Tiene una autoevaluación pendiente
           </Link>)
         }
