@@ -100,13 +100,11 @@ function SelfEvaluationItem() {
               <h3>Evaluacion {i+1}:</h3>
               <tr>
                 <td data-label="Nombre de labor">{evaluation.lab_nombre}</td>
-                <td data-label="Tipo de labor">{evaluation.tl_descripcion}</td>
-                <td data-label="Horas">{evaluation.lab_horas}</td>
-                <td data-label="Descripción">{evaluation.lab_nombre}</td>
-                <td data-label="Acto (si aplica)">Si</td>
-                <td data-label="Fecha inicio">{evaluation.per_fechainicio}</td>
-                <td data-label="Fecha fin">{evaluation.per_fechafin}</td>
-                <td data-label="Estado">{evaluation.eva_estado === 0 ? "En ejecucion" : "cerrado"}</td>
+                <td data-label="Fecha inicio y fin">
+                  {evaluation.per_fechainicio}
+                  <br />
+                  {evaluation.per_fechafin}
+                </td>
                 <td data-label="Resultados">
                   {
                     evaluation.tl_descripcion.toLowerCase() == "docencia"? 
